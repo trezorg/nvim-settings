@@ -1,0 +1,21 @@
+return {
+  pde = {
+    solidty = true,
+    rust = true,
+    python = true,
+    lua = true,
+    json = true,
+    html = true,
+    go = true,
+    bash = true,
+    vuejs = false,
+    typescript = false,
+    tailwind = false,
+    svelte = false,
+    react = false,
+    java = false,
+    csharp = false,
+    cpp = false,
+    angular = false,
+  },
+}
