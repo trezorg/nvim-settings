@@ -8,6 +8,7 @@ return {
     html = true,
     go = true,
     bash = true,
+    terraform = true,
     vuejs = false,
     typescript = false,
     tailwind = false,

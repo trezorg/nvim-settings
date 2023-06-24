@@ -50,6 +50,7 @@ opt.undofile = true
 opt.updatetime = 200
 opt.wildmode = 'longest:full,full'
 opt.history = 10000
+opt.shell = 'zsh'
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
