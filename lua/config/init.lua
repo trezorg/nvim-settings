@@ -9,6 +9,7 @@ return {
     go = true,
     bash = true,
     terraform = true,
+    helm = true,
     vuejs = false,
     typescript = false,
     tailwind = false,

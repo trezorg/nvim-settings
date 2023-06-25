@@ -71,6 +71,7 @@ function M.setup(_, opts)
     local server_opts = vim.tbl_deep_extend('force', {
       capabilities = capabilities,
     }, servers[server] or {})
+    -- print(opts.setup[server], server)
     if opts.setup[server] then
       if opts.setup[server](server, server_opts) then
         return
