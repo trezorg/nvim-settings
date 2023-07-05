@@ -62,3 +62,7 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.g.netrw_banner = 0
 vim.g.netrw_liststyle = 3
 vim.g.netrw_browse_split = 3
+vim.g.netrw_winsize = 30
+vim.g.netrw_localcopydircmd = 'cp -r'
+
+vim.keymap.set('n', '<leader>fw', '<cmd>Lexplore %:p:h<CR>', { silent = true, desc = 'Open NetRW' })

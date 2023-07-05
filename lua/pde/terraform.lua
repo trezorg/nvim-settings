@@ -26,7 +26,7 @@ return {
         terraformls = function(_, _)
           -- vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
           --   pattern = { '*.tf', '*.tfvars' },
-          --   callback = vim.lsp.buf.format(),
+          --   callback = vim.lsp.buf.format,
           -- })
           local lsp_utils = require 'base.lsp.utils'
           lsp_utils.on_attach(function(client, bufnr)
