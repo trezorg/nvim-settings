@@ -9,7 +9,14 @@ return {
       vim.list_extend(opts.ensure_installed, { 'yamllint', 'ansible-lint', 'ansible-language-server' })
     end,
   },
-  { 'pearofducks/ansible-vim', event = 'VeryLazy' },
+  {
+    'pearofducks/ansible-vim',
+    event = 'VeryLazy',
+    init = function()
+      vim.g.ansible_attribute_highlight = 'ob'
+      vim.g.ansible_name_highlight = 'd'
+    end,
+  },
   {
     'neovim/nvim-lspconfig',
     opts = {
