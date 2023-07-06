@@ -6,7 +6,7 @@ return {
   { 'tpope/vim-unimpaired' },
   { 'tpope/vim-surround' },
   { 'tpope/vim-repeat' },
-  { 'tpope/vim-abolish' },
+  { 'tpope/vim-abolish', event = 'VeryLazy' },
   {
     'crispgm/nvim-tabline',
     event = 'VeryLazy',
