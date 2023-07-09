@@ -3,10 +3,16 @@ return {
     'nvim-telescope/telescope.nvim',
     dependencies = {
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+      {
+        'nvim-telescope/telescope-file-browser.nvim',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+      },
     },
     cmd = 'Telescope',
     -- stylua: ignore
     keys = {
+      { "<leader>fte", "<cmd>tabnew | Telescope file_browser<cr>", desc = "Browse Files" },
+      { "<leader>fe", "<cmd>Telescope file_browser<cr>", desc = "Browse Files" },
       { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files" },
       { "<leader>fg", "<cmd>Telescope git_files<cr>", desc = "Git Files" },
       { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
@@ -14,6 +20,11 @@ return {
     },
     opts = {
       extensions = {
+        file_browser = {
+          theme = 'ivy',
+          -- disables netrw and use telescope-file-browser in its place
+          hijack_netrw = false,
+        },
         fzf = {
           fuzzy = true, -- false will only do exact matching
           override_generic_sorter = true, -- override the generic sorter
@@ -45,6 +56,7 @@ return {
       local telescope = require 'telescope'
       telescope.setup(opts)
       telescope.load_extension 'fzf'
+      telescope.load_extension 'file_browser'
     end,
   },
   {
