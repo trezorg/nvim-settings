@@ -8,6 +8,18 @@ return {
   { 'tpope/vim-repeat' },
   { 'tpope/vim-abolish', event = 'VeryLazy' },
   {
+    'echasnovski/mini.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    version = false,
+    event = 'VeryLazy',
+    config = function(_, opts)
+      require('mini.files').setup()
+      vim.keymap.set('n', '<leader>fm', '<cmd>:lua MiniFiles.open()<CR>', { silent = true, desc = 'Open Minifile' })
+      -- set termguicolors to enable highlight groups
+      vim.opt.termguicolors = true
+    end,
+  },
+  {
     'crispgm/nvim-tabline',
     event = 'VeryLazy',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
