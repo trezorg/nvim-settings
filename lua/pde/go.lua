@@ -1,40 +1,44 @@
-if not require("config").pde.go then
+if not require('config').pde.go then
   return {}
 end
 
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
+    'nvim-treesitter/nvim-treesitter',
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "go", "gomod", "gowork", "gosum" })
+      vim.list_extend(opts.ensure_installed, { 'go', 'gomod', 'gowork', 'gosum' })
     end,
   },
   {
-    "williamboman/mason.nvim",
+    'williamboman/mason.nvim',
     opts = function(_, opts)
       vim.list_extend(
         opts.ensure_installed,
-        { "delve", "gotests", "golangci-lint", "gofumpt", "goimports", "golangci-lint-langserver", "impl", "gomodifytags", "iferr", "gotestsum" }
+        { 'delve', 'gotests', 'golangci-lint', 'gofumpt', 'goimports', 'golangci-lint-langserver', 'impl', 'gomodifytags', 'iferr', 'gotestsum' }
       )
     end,
   },
   {
-    "ray-x/go.nvim",
+    'ray-x/go.nvim',
+    version = false,
     dependencies = {
-      "ray-x/guihua.lua",
-      "neovim/nvim-lspconfig",
-      "nvim-treesitter/nvim-treesitter",
+      'ray-x/guihua.lua',
+      'neovim/nvim-lspconfig',
+      'nvim-treesitter/nvim-treesitter',
     },
-    opts = {},
+    opts = {
+      lsp_codelens = true,
+    },
     config = function(_, opts)
-      require("go").setup(opts)
+      require('go').setup(opts)
+      require('go.codelens').setup()
     end,
-    event = { "CmdlineEnter" },
-    ft = { "go", "gomod" },
+    event = { 'CmdlineEnter' },
+    ft = { 'go', 'gomod' },
     build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   },
   {
-    "neovim/nvim-lspconfig",
+    'neovim/nvim-lspconfig',
     opts = {
       servers = {
         gopls = {
@@ -61,7 +65,7 @@ return {
       },
       setup = {
         gopls = function(_, _)
-          local lsp_utils = require "base.lsp.utils"
+          local lsp_utils = require 'base.lsp.utils'
           lsp_utils.on_attach(function(client, bufnr)
             local map = function(mode, lhs, rhs, desc)
               if desc then
@@ -70,7 +74,9 @@ return {
               vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc, buffer = bufnr, noremap = true })
             end
             -- stylua: ignore
+            --
             if client.name == "gopls" then
+              map("n", "<leader>ll", function() vim.lsp.codelens.run() end, "Code Lens" )
               map("n", "<leader>ly", "<cmd>GoModTidy<cr>", "Go Mod Tidy")
               map("n", "<leader>lc", "<cmd>GoCoverage<Cr>", "Go Test Coverage")
               map("n", "<leader>lt", "<cmd>GoTest<Cr>", "Go Test")
@@ -95,17 +101,17 @@ return {
     },
   },
   {
-    "mfussenegger/nvim-dap",
-    dependencies = { "leoluz/nvim-dap-go", opts = {} },
+    'mfussenegger/nvim-dap',
+    dependencies = { 'leoluz/nvim-dap-go', opts = {} },
   },
   {
-    "nvim-neotest/neotest",
+    'nvim-neotest/neotest',
     dependencies = {
-      "nvim-neotest/neotest-go",
+      'nvim-neotest/neotest-go',
     },
     opts = function(_, opts)
       vim.list_extend(opts.adapters, {
-        require "neotest-go",
+        require 'neotest-go',
       })
     end,
   },

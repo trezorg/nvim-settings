@@ -67,3 +67,4 @@ vim.g.netrw_localcopydircmd = 'cp -r'
 -- vim.g.loaded_netrw = 1
 -- vim.g.loaded_netrwPlugin = 1
 vim.keymap.set('n', '<leader>fw', '<cmd>Lexplore %:p:h<CR>', { silent = true, desc = 'Open NetRW' })
+vim.keymap.set('n', '<leader>ftt', '<cmd>tabnew | term<CR>', { silent = true, desc = 'Open terminal' })
