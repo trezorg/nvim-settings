@@ -2,6 +2,7 @@ return {
   pde = {
     ansible = true,
     bash = true,
+    db = true,
     go = true,
     helm = true,
     html = true,
