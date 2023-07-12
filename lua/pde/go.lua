@@ -31,7 +31,6 @@ return {
     },
     config = function(_, opts)
       require('go').setup(opts)
-      require('go.codelens').setup()
     end,
     event = { 'CmdlineEnter' },
     ft = { 'go', 'gomod' },
