@@ -4,6 +4,18 @@ end
 
 return {
   {
+    'nvim-treesitter/nvim-treesitter',
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, { 'sql' })
+    end,
+  },
+  {
+    'williamboman/mason.nvim',
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, { 'sqlls' })
+    end,
+  },
+  {
     'tpope/vim-dadbod',
     dependencies = {
       'kristijanhusak/vim-dadbod-ui',
@@ -17,16 +29,16 @@ return {
 
       vim.api.nvim_create_autocmd('FileType', {
         pattern = {
-          'sql',
+          '*.sql',
         },
         command = [[setlocal omnifunc=vim_dadbod_completion#omni]],
       })
 
       vim.api.nvim_create_autocmd('FileType', {
         pattern = {
-          'sql',
-          'mysql',
-          'plsql',
+          '*.sql',
+          '*.mysql',
+          '*.plsql',
         },
         callback = function()
           vim.schedule(db_completion)
@@ -45,6 +57,14 @@ return {
         ['<leader>Df'] = { cmd = '<Cmd>DBUIFindBuffer<Cr>', desc = 'Find buffer' },
         ['<leader>Dr'] = { cmd = '<Cmd>DBUIRenameBuffer<Cr>', desc = 'Rename buffer' },
         ['<leader>Dq'] = { cmd = '<Cmd>DBUILastQueryInfo<Cr>', desc = 'Last query info' },
+      },
+    },
+  },
+  {
+    'neovim/nvim-lspconfig',
+    opts = {
+      servers = {
+        sqlls = {},
       },
     },
   },
