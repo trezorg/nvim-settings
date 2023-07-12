@@ -1,19 +1,19 @@
 local function augroup(name)
-  return vim.api.nvim_create_augroup("nde_" .. name, { clear = true })
+  return vim.api.nvim_create_augroup('nde_' .. name, { clear = true })
 end
 
 -- See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd("TextYankPost", {
+vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()
   end,
-  group = augroup "highlight_yank",
-  pattern = "*",
+  group = augroup 'highlight_yank',
+  pattern = '*',
 })
 
 -- Go to last loction when opening a buffer
-vim.api.nvim_create_autocmd("BufReadPost", {
-  group = augroup "last_loc",
+vim.api.nvim_create_autocmd('BufReadPost', {
+  group = augroup 'last_loc',
   callback = function()
     local mark = vim.api.nvim_buf_get_mark(0, '"')
     local lcount = vim.api.nvim_buf_line_count(0)
@@ -24,33 +24,33 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- windows to close
-vim.api.nvim_create_autocmd("FileType", {
-  group = augroup "close_with_q",
+vim.api.nvim_create_autocmd('FileType', {
+  group = augroup 'close_with_q',
   pattern = {
-    "OverseerForm",
-    "OverseerList",
-    "checkhealth",
-    "floggraph",
-    "fugitive",
-    "git",
-    "help",
-    "lspinfo",
-    "man",
-    "neotest-output",
-    "neotest-summary",
-    "qf",
-    "query",
-    "spectre_panel",
-    "startuptime",
-    "toggleterm",
-    "tsplayground",
-    "vim",
-    "neoai-input",
-    "neoai-output",
-    "notify",
+    'OverseerForm',
+    'OverseerList',
+    'checkhealth',
+    'floggraph',
+    'fugitive',
+    'git',
+    'help',
+    'lspinfo',
+    'man',
+    'neotest-output',
+    'neotest-summary',
+    'qf',
+    'query',
+    'spectre_panel',
+    'startuptime',
+    'toggleterm',
+    'tsplayground',
+    'vim',
+    'neoai-input',
+    'neoai-output',
+    'notify',
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
-    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+    vim.keymap.set('n', 'q', '<cmd>close<cr>', { buffer = event.buf, silent = true })
   end,
 })
