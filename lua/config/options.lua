@@ -52,6 +52,9 @@ opt.wildmode = 'longest:full,full'
 opt.history = 10000
 opt.shell = 'zsh'
 
+opt.spelllang = 'en_us'
+opt.spell = true
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 

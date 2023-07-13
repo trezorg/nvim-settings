@@ -43,7 +43,7 @@ return {
         ruff_lsp = {
           init_options = {
             settings = {
-              args = { '--max-line-length=120' },
+              args = {},
             },
           },
         },
