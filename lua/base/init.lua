@@ -7,6 +7,7 @@ return {
   { 'tpope/vim-surround' },
   { 'tpope/vim-repeat' },
   { 'tpope/vim-abolish', event = 'VeryLazy' },
+  { 'mitsuhiko/vim-jinja', event = 'VeryLazy' },
   {
     'echasnovski/mini.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
