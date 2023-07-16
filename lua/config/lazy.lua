@@ -19,7 +19,7 @@ require('lazy').setup {
     { import = 'pde' },
   },
   defaults = { lazy = true, version = nil },
-  install = { missing = true, colorscheme = { 'vscode', 'onedark', 'tokyonight', 'catppuccin' } },
+  install = { missing = true, colorscheme = { 'darcula', 'vscode', 'onedark', 'tokyonight', 'catppuccin' } },
   dev = { patterns = jit.os:find 'Windows' and {} or { 'alpha2phi' } },
   checker = { enabled = true },
   performance = {

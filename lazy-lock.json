@@ -11,6 +11,7 @@
   "cmp-path": { "branch": "main", "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
   "cmp_luasnip": { "branch": "master", "commit": "18095520391186d634a0045dacaa346291096566" },
   "crates.nvim": { "branch": "main", "commit": "4ce7c51b881e58f1e2f8f437f30e4e583cbac319" },
+  "darcula": { "branch": "master", "commit": "faf8dbab27bee0f27e4f1c3ca7e9695af9b1242b" },
   "dressing.nvim": { "branch": "master", "commit": "e6eff7a5a950a853c3903d906dbcea03f778db5f" },
   "fidget.nvim": { "branch": "main", "commit": "0ba1e16d07627532b6cae915cc992ecac249fb97" },
   "friendly-snippets": { "branch": "main", "commit": "6153166d5a3dcc7e2809ea4f17f9edb34d026026" },

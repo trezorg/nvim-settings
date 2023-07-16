@@ -13,17 +13,26 @@ return {
     lazy = false,
     priority = 1002,
     name = 'vscode',
-    opts = {
-      transparent = false,
-      -- Enable italic comment
-      italic_comments = true,
-      -- Disable nvim-tree background color
-      disable_nvimtree_bg = false,
-    },
-    config = function(_, opts)
-      local vscode = require 'vscode'
-      vscode.setup(opts)
-      vscode.load()
+    -- opts = {
+    --   transparent = false,
+    --   -- Enable italic comment
+    --   italic_comments = true,
+    --   -- Disable nvim-tree background color
+    --   disable_nvimtree_bg = false,
+    -- },
+    -- config = function(_, opts)
+    --   local vscode = require 'vscode'
+    --   vscode.setup(opts)
+    --   vscode.load()
+    -- end,
+  },
+  {
+    'doums/darcula',
+    lazy = false,
+    priority = 1005,
+    name = 'darcula',
+    init = function()
+      vim.cmd [[colorscheme darcula]]
     end,
   },
   {
