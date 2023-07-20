@@ -95,10 +95,10 @@ return {
             end
             -- stylua: ignore
             if client.name == "pyright" then
-              map("n", "<leader>lo", "<cmd>PyrightOrganizeImports<cr>",  "Organize Imports" )
-              map("n", "<leader>lC", function() require("dap-python").test_class() end,  "Debug Class" )
-              map("n", "<leader>lM", function() require("dap-python").test_method() end,  "Debug Method" )
-              map("v", "<leader>lE", function() require("dap-python").debug_selection() end, "Debug Selection" )
+              map("n", "<leader>lo", "<cmd>PyrightOrganizeImports<cr>", "Organize Imports")
+              map("n", "<leader>lC", function() require("dap-python").test_class() end, "Debug Class")
+              map("n", "<leader>lM", function() require("dap-python").test_method() end, "Debug Method")
+              map("v", "<leader>lE", function() require("dap-python").debug_selection() end, "Debug Selection")
             end
           end)
         end,
@@ -124,13 +124,13 @@ return {
         require 'neotest-python' {
           dap = { justMyCode = false },
           runner = 'pytest',
-          is_test_file = function(file_path)
-            if string.find(file_path, 'tests') == nil then
-              return false
-            else
-              return true
-            end
-          end,
+          -- is_test_file = function(file_path)
+          --     if string.find(file_path, 'tests') == nil then
+          --         return false
+          --     else
+          --         return true
+          --     end
+          -- end,
         },
       })
     end,
@@ -138,5 +138,13 @@ return {
   {
     'microsoft/python-type-stubs',
     cond = false,
+  },
+  {
+    "ellisonleao/dotenv.nvim",
+    lazy = false,
+    opts = {
+      enable_on_load = true, -- will load your .env file upon loading a buffer
+      verbose = false,       -- show error notification if .env file is not found and if .env is loaded
+    },
   },
 }
