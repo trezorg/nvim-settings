@@ -13,7 +13,28 @@ return {
     'jose-elias-alvarez/null-ls.nvim',
     opts = function(_, opts)
       local nls = require 'null-ls'
-      table.insert(opts.sources, nls.builtins.formatting.black)
+      local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+      opts.sources = {
+        nls.builtins.formatting.black,
+        nls.builtins.formatting.isort,
+        nls.builtins.diagnostics.ruff,
+      }
+      opts.on_attach = function(client, bufnr)
+        if client.supports_method 'textDocument/formatting' then
+          vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
+          vim.api.nvim_create_autocmd('BufWritePre', {
+            group = augroup,
+            buffer = bufnr,
+            callback = function()
+              vim.lsp.buf.format { bufnr = bufnr }
+            end,
+          })
+        end
+      end
+
+      -- table.insert(opts.sources, nls.builtins.formatting.black)
+      -- table.insert(opts.sources, nls.builtins.formatting.isort)
+      -- table.insert(opts.sources, nls.builtins.diagnostics.ruff)
     end,
   },
   {
@@ -102,7 +123,14 @@ return {
       vim.list_extend(opts.adapters, {
         require 'neotest-python' {
           dap = { justMyCode = false },
-          runner = 'unittest',
+          runner = 'pytest',
+          is_test_file = function(file_path)
+            if string.find(file_path, 'tests') == nil then
+              return false
+            else
+              return true
+            end
+          end,
         },
       })
     end,
