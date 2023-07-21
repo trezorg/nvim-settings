@@ -44,9 +44,18 @@ keymap('n', '[<Space>', 'O<Esc>')
 
 -- Auto indent
 keymap('n', 'i', function()
-  if #vim.fn.getline '.' == 0 then
-    return [["_cc]]
-  else
-    return 'i'
-  end
+    if #vim.fn.getline '.' == 0 then
+        return [["_cc]]
+    else
+        return 'i'
+    end
 end, { expr = true })
+
+
+keymap({ 'n', 'i' }, '<C-Tab>', '<cmd>tabnext<CR>')
+keymap({ 'n', 'i' }, '<C-S-Tab>', '<cmd>tabprevious<CR>')
+keymap({ 'n', 'i' }, '<C-Insert>', '<cmd>tabnew<CR>')
+keymap({ 'n', 'i' }, '<C-Delete>', '<cmd>tabclose<CR>')
+
+keymap('n', '<leader>fw', '<cmd>Lexplore %:p:h<CR>', { silent = true, desc = 'Open NetRW' })
+keymap('n', '<leader>ftt', '<cmd>tabnew | term<CR>', { silent = true, desc = 'Open terminal' })
