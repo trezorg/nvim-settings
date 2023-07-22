@@ -1,12 +1,12 @@
 return {
-  { 'tpope/vim-sleuth', event = 'VeryLazy' },
-  { 'tpope/vim-repeat', event = 'VeryLazy' },
+  { 'tpope/vim-sleuth',    event = 'VeryLazy' },
+  { 'tpope/vim-repeat',    event = 'VeryLazy' },
   { 'tpope/vim-rhubarb' },
   { 'tpope/vim-commentary' },
   { 'tpope/vim-unimpaired' },
   { 'tpope/vim-surround' },
   { 'tpope/vim-repeat' },
-  { 'tpope/vim-abolish', event = 'VeryLazy' },
+  { 'tpope/vim-abolish',   event = 'VeryLazy' },
   { 'mitsuhiko/vim-jinja', event = 'VeryLazy' },
   {
     'echasnovski/mini.nvim',
@@ -16,7 +16,8 @@ return {
     config = function(_, opts)
       require('mini.files').setup()
       vim.keymap.set('n', '<leader>fm', '<cmd>:lua MiniFiles.open()<CR>', { silent = true, desc = 'Open Minifile' })
-      vim.keymap.set('n', '<leader>ftm', '<cmd>tabnew | :lua MiniFiles.open()<CR>', { silent = true, desc = 'Open Minifile new tab' })
+      vim.keymap.set('n', '<leader>ftm', '<cmd>tabnew | :lua MiniFiles.open()<CR>',
+        { silent = true, desc = 'Open Minifile new tab' })
       -- set termguicolors to enable highlight groups
       vim.opt.termguicolors = true
     end,
@@ -27,13 +28,13 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = true,
     opts = {
-      show_index = true, -- show tab index
-      show_modify = true, -- show buffer modification indicator
-      show_icon = true, -- show file extension icon
-      fnamemodify = ':p:.', -- file name modifier
-      modify_indicator = '[+]', -- modify indicator
-      no_name = 'No name', -- no name buffer name
-      brackets = { '[', ']' }, -- file name brackets surrounding
+      show_index = true,           -- show tab index
+      show_modify = true,          -- show buffer modification indicator
+      show_icon = true,            -- show file extension icon
+      fnamemodify = ':p:.',        -- file name modifier
+      modify_indicator = '[+]',    -- modify indicator
+      no_name = 'No name',         -- no name buffer name
+      brackets = { '[', ']' },     -- file name brackets surrounding
       inactive_tab_max_length = 0, -- max length of inactive tab titles, 0 to ignore
     },
   },
@@ -55,9 +56,9 @@ return {
     opts = { options = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help' } },
     -- stylua: ignore
     keys = {
-      { "<leader>qs", function() require("persistence").load() end, desc = "Restore Session" },
+      { "<leader>qs", function() require("persistence").load() end,                desc = "Restore Session" },
       { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
-      { "<leader>qd", function() require("persistence").stop() end, desc = "Don't Save Current Session" },
+      { "<leader>qd", function() require("persistence").stop() end,                desc = "Don't Save Current Session" },
     },
   },
   {
@@ -67,6 +68,33 @@ return {
       defaults = {
         ['<leader>g'] = { name = '+Git' },
       },
+    },
+  },
+  {
+    'Pocco81/auto-save.nvim',
+    event = 'VeryLazy',
+    opts = {
+      enabled = true,
+      execution_message = {
+        message = function() -- message to print on save
+          return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
+        end,
+        dim = 0.18,               -- dim the color of `message`
+        cleaning_interval = 1250, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
+      },
+      trigger_events = { "InsertLeave", "TextChanged" },
+      condition = function(buf)
+        local fn = vim.fn
+        local utils = require("auto-save.utils.data")
+
+        if
+            fn.getbufvar(buf, "&modifiable") == 1 and
+            utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
+          return true -- met condition(s), can save
+        end
+        return false  -- can't save
+      end,
+      debounce_delay = 1000,
     },
   },
 }
