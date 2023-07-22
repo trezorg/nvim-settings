@@ -13,13 +13,13 @@ return {
     'jose-elias-alvarez/null-ls.nvim',
     opts = function(_, opts)
       local nls = require 'null-ls'
-      local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
       opts.sources = {
         nls.builtins.formatting.black,
         nls.builtins.formatting.isort,
         nls.builtins.diagnostics.ruff,
       }
       opts.on_attach = function(client, bufnr)
+        local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
         if client.supports_method 'textDocument/formatting' then
           vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
           vim.api.nvim_create_autocmd('BufWritePre', {
@@ -73,7 +73,7 @@ return {
             python = {
               analysis = {
                 autoImportCompletions = true,
-                typeCheckingMode = 'off',
+                typeCheckingMode = 'basic',
                 autoSearchPaths = true,
                 useLibraryCodeForTypes = true,
                 diagnosticMode = 'openFilesOnly', -- "openFilesOnly" or "openFilesOnly"

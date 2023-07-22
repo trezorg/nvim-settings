@@ -51,6 +51,7 @@ opt.updatetime = 200
 opt.wildmode = 'longest:full,full'
 opt.history = 10000
 opt.shell = 'zsh'
+opt.swapfile = false
 
 opt.spelllang = 'en_us'
 opt.spell = true
