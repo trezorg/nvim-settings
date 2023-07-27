@@ -11,25 +11,29 @@ return {
     cmd = 'Telescope',
     -- stylua: ignore
     keys = {
-      { "<leader>fte", "<cmd>tabnew | Telescope file_browser<cr>", desc = "Browse Files" },
-      { "<leader>fe", "<cmd>Telescope file_browser<cr>", desc = "Browse Files" },
-      { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files" },
-      { "<leader>fg", "<cmd>Telescope git_files<cr>", desc = "Git Files" },
-      { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-      { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help" },
+      { "<leader>fte", "<cmd>tabnew | Telescope file_browser<cr> hidden=true", desc = "Browse Files" },
+      { "<leader>fe",  "<cmd>Telescope file_browser hidden=true<cr>",          desc = "Browse Files" },
+      { "<leader>ff",  "<cmd>Telescope find_files hidden=true<cr>",            desc = "Find Files" },
+      { "<leader>fg",  "<cmd>Telescope git_files<cr>",                         desc = "Git Files" },
+      { "<leader>fb",  "<cmd>Telescope buffers<cr>",                           desc = "Buffers" },
+      { "<leader>fh",  "<cmd>Telescope help_tags<cr>",                         desc = "Help" },
     },
     opts = {
       extensions = {
         file_browser = {
           theme = 'ivy',
           -- disables netrw and use telescope-file-browser in its place
-          hijack_netrw = false,
+          hijack_netrw = true,
+          hidden = { file_browser = true, folder_browser = true },
+          respect_gitignore = true,
+          -- browse_files = true,
+          -- browse_folders = true,
         },
         fzf = {
-          fuzzy = true, -- false will only do exact matching
+          fuzzy = true,                   -- false will only do exact matching
           override_generic_sorter = true, -- override the generic sorter
-          override_file_sorter = true, -- override the file sorter
-          case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
+          override_file_sorter = true,    -- override the file sorter
+          case_mode = 'smart_case',       -- or "ignore_case" or "respect_case"
           -- the default case_mode is "smart_case"
         },
       },
@@ -69,17 +73,17 @@ return {
         key_labels = { ['<leader>'] = 'SPC' },
         triggers = 'auto',
         window = {
-          border = 'single', -- none, single, double, shadow
-          position = 'bottom', -- bottom, top
-          margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
+          border = 'single',        -- none, single, double, shadow
+          position = 'bottom',      -- bottom, top
+          margin = { 1, 0, 1, 0 },  -- extra window margin [top, right, bottom, left]
           padding = { 1, 1, 1, 1 }, -- extra window padding [top, right, bottom, left]
           winblend = 0,
         },
         layout = {
           height = { min = 4, max = 25 }, -- min and max height of the columns
           width = { min = 20, max = 50 }, -- min and max width of the columns
-          spacing = 3, -- spacing between columns
-          align = 'left', -- align columns left, center or right
+          spacing = 3,                    -- spacing between columns
+          align = 'left',                 -- align columns left, center or right
         },
       },
       defaults = {
