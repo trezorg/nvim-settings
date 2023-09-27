@@ -55,6 +55,7 @@ opt.swapfile = false
 
 opt.spelllang = 'en_us'
 opt.spell = true
+opt.autochdir = true
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
