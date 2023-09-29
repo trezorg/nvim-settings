@@ -20,7 +20,7 @@ opt.hlsearch = false
 opt.ignorecase = true
 opt.inccommand = 'nosplit'
 opt.joinspaces = false
-opt.laststatus = 0
+-- opt.laststatus = 0
 opt.list = true
 opt.mouse = 'a'
 opt.number = true
@@ -55,7 +55,10 @@ opt.swapfile = false
 
 opt.spelllang = 'en_us'
 opt.spell = true
-opt.autochdir = true
+opt.autochdir = false
+opt.cursorcolumn = false
+opt.ruler = true
+opt.rulerformat = '%l,%v'
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
