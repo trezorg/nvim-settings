@@ -9,6 +9,15 @@ return {
   { 'tpope/vim-abolish',   event = 'VeryLazy' },
   { 'mitsuhiko/vim-jinja', event = 'VeryLazy' },
   {
+    "iamcco/markdown-preview.nvim",
+    event = 'VeryLazy',
+    config = function()
+      vim.fn["mkdp#util#install"]()
+      vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreview<CR>', { silent = true, desc = 'MarkdownPreview' })
+      vim.keymap.set('n', '<leader>ms', '<cmd>MarkdownPreviewStop<CR>', { silent = true, desc = 'MarkdownPreviewStop' })
+    end,
+  },
+  {
     'echasnovski/mini.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     version = false,
