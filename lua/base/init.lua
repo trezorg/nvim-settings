@@ -11,10 +11,12 @@ return {
   {
     "iamcco/markdown-preview.nvim",
     event = 'VeryLazy',
+    lazy = false,
     config = function()
       vim.fn["mkdp#util#install"]()
       vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreview<CR>', { silent = true, desc = 'MarkdownPreview' })
-      vim.keymap.set('n', '<leader>ms', '<cmd>MarkdownPreviewStop<CR>', { silent = true, desc = 'MarkdownPreviewStop' })
+      vim.keymap.set('n', '<leader>ms', '<cmd>MarkdownPreviewStop<CR>',
+        { silent = true, desc = 'MarkdownPreviewStop' })
     end,
   },
   {
@@ -22,7 +24,7 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     version = false,
     event = 'VeryLazy',
-    config = function(_, opts)
+    config = function(_, _) -- opts
       require('mini.files').setup()
       vim.keymap.set('n', '<leader>fm', '<cmd>:lua MiniFiles.open()<CR>', { silent = true, desc = 'Open Minifile' })
       vim.keymap.set('n', '<leader>ftm', '<cmd>tabnew | :lua MiniFiles.open()<CR>',
@@ -67,7 +69,12 @@ return {
     keys = {
       { "<leader>qs", function() require("persistence").load() end,                desc = "Restore Session" },
       { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
-      { "<leader>qd", function() require("persistence").stop() end,                desc = "Don't Save Current Session" },
+      {
+        "<leader>qd",
+        function() require("persistence").stop() end,
+        desc =
+        "Don't Save Current Session"
+      },
     },
   },
   {
@@ -89,7 +96,7 @@ return {
           return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
         end,
         dim = 0.18,               -- dim the color of `message`
-        cleaning_interval = 1250, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
+        cleaning_interval = 1000, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
       },
       trigger_events = { "InsertLeave", "TextChanged" },
       condition = function(buf)
@@ -103,7 +110,7 @@ return {
         end
         return false  -- can't save
       end,
-      debounce_delay = 1000,
+      debounce_delay = 3000,
     },
   },
 }
