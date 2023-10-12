@@ -9,6 +9,20 @@ return {
   { 'tpope/vim-abolish',   event = 'VeryLazy' },
   { 'mitsuhiko/vim-jinja', event = 'VeryLazy' },
   {
+    "https://github.com/dstein64/nvim-scrollview",
+    event = 'VeryLazy',
+    lazy = false,
+    config = true,
+    opts = {
+      excluded_filetypes = { 'nerdtree' },
+      current_only = true,
+      base = 'left',
+      column = 1,
+      signs_on_startup = { 'all' },
+      diagnostics_severities = { vim.diagnostic.severity.WARN }
+    }
+  },
+  {
     "iamcco/markdown-preview.nvim",
     event = 'VeryLazy',
     lazy = false,

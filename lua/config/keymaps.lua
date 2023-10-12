@@ -59,3 +59,6 @@ keymap({ 'n', 'i' }, '<C-Delete>', '<cmd>tabclose<CR>')
 
 keymap('n', '<leader>fw', '<cmd>Lexplore %:p:h<CR>', { silent = true, desc = 'Open NetRW' })
 keymap('n', '<leader>ftt', '<cmd>tabnew | term<CR>', { silent = true, desc = 'Open terminal' })
+
+keymap('n', '<leader>ss', '<cmd>mksession!<CR>', { silent = true, desc = 'Save session' })
+keymap('n', '<leader>sl', '<cmd>source<CR>', { silent = true, desc = 'Load session' })
