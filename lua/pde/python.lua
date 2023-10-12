@@ -17,6 +17,7 @@ return {
         nls.builtins.formatting.black,
         nls.builtins.formatting.isort,
         nls.builtins.diagnostics.ruff,
+        nls.builtins.diagnostics.mypy,
       }
       opts.on_attach = function(client, bufnr)
         local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
@@ -54,7 +55,7 @@ return {
   {
     'williamboman/mason.nvim',
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { 'debugpy', 'black', 'ruff', 'isort' })
+      vim.list_extend(opts.ensure_installed, { 'debugpy', 'black', 'ruff', 'isort', "mypy" })
     end,
   },
   {
