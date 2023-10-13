@@ -32,10 +32,6 @@ return {
           })
         end
       end
-
-      -- table.insert(opts.sources, nls.builtins.formatting.black)
-      -- table.insert(opts.sources, nls.builtins.formatting.isort)
-      -- table.insert(opts.sources, nls.builtins.diagnostics.ruff)
     end,
   },
   {
@@ -125,13 +121,6 @@ return {
         require 'neotest-python' {
           dap = { justMyCode = false },
           runner = 'pytest',
-          -- is_test_file = function(file_path)
-          --     if string.find(file_path, 'tests') == nil then
-          --         return false
-          --     else
-          --         return true
-          --     end
-          -- end,
         },
       })
     end,

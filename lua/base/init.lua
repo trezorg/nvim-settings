@@ -112,7 +112,8 @@ return {
         dim = 0.18,               -- dim the color of `message`
         cleaning_interval = 1000, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
       },
-      trigger_events = { "InsertLeave", "TextChanged" },
+      -- trigger_events = { "InsertLeave", "TextChanged" },
+      trigger_events = { "InsertLeave" },
       condition = function(buf)
         local fn = vim.fn
         local utils = require("auto-save.utils.data")
@@ -124,7 +125,7 @@ return {
         end
         return false  -- can't save
       end,
-      debounce_delay = 3000,
+      debounce_delay = 1000,
     },
   },
 }
