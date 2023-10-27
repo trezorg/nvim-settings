@@ -21,7 +21,10 @@ require('lazy').setup {
   defaults = { lazy = true, version = nil },
   install = { missing = true, colorscheme = { 'darcula', 'vscode', 'onedark', 'tokyonight', 'catppuccin' } },
   dev = { patterns = jit.os:find 'Windows' and {} or { 'alpha2phi' } },
-  checker = { enabled = true },
+  checker = { enabled = true, notify = false },
+  change_detection = {
+    notify = false,
+  },
   performance = {
     cache = {
       enabled = true,
