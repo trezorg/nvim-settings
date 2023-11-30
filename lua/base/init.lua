@@ -1,13 +1,13 @@
 return {
-    { 'tpope/vim-sleuth',     event = 'VeryLazy' },
-    { 'tpope/vim-repeat',     event = 'VeryLazy' },
+    { 'tpope/vim-sleuth',    event = 'VeryLazy' },
+    { 'tpope/vim-repeat',    event = 'VeryLazy' },
     { 'tpope/vim-rhubarb' },
     { 'tpope/vim-commentary' },
     { 'tpope/vim-unimpaired' },
     { 'tpope/vim-surround' },
     { 'tpope/vim-repeat' },
-    { 'tpope/vim-abolish',    event = 'VeryLazy' },
-    { 'mitsuhiko/vim-jinja',  event = 'VeryLazy' },
+    { 'tpope/vim-abolish',   event = 'VeryLazy' },
+    { 'mitsuhiko/vim-jinja', event = 'VeryLazy' },
     {
         "https://github.com/dstein64/nvim-scrollview",
         event = 'VeryLazy',
@@ -72,7 +72,11 @@ return {
         },
         -- stylua: ignore
         keys = {
-            { "<leader>gs", "<cmd>Git<cr>", desc = "Status" },
+            { "<leader>gs",  "<cmd>Git<cr>",               desc = "Status" },
+            { "<leader>gb",  "<cmd>Git blame<cr>",         desc = "Blame" },
+            { "<leader>gl",  "<cmd>Git log<cr>",           desc = "Log" },
+            { "<leader>gdd", "<cmd>Git diff<cr>",          desc = "Diff" },
+            { "<leader>gdc", "<cmd>Git diff --cached<cr>", desc = "Diff cached" },
         },
     },
     {
