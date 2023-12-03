@@ -62,3 +62,4 @@ keymap('n', '<leader>ftt', '<cmd>tabnew | term<CR>', { silent = true, desc = 'Op
 
 keymap('n', '<leader>ss', '<cmd>mksession!<CR>', { silent = true, desc = 'Save session' })
 keymap('n', '<leader>sl', '<cmd>source<CR>', { silent = true, desc = 'Load session' })
+keymap('n', '<leader>cd', '<cmd>lcd %:h<CR>', { silent = true, desc = 'Cnange directory current window' })
