@@ -51,6 +51,11 @@ keymap('n', 'i', function()
     end
 end, { expr = true })
 
+function cd_and_notify(command)
+    local path = vim.fn.expand('%:h')
+    vim.cmd(command .. " " .. path)
+    vim.notify(path)
+end
 
 keymap({ 'n', 'i' }, '<C-Tab>', '<cmd>tabnext<CR>')
 keymap({ 'n', 'i' }, '<C-S-Tab>', '<cmd>tabprevious<CR>')
@@ -62,4 +67,7 @@ keymap('n', '<leader>ftt', '<cmd>tabnew | term<CR>', { silent = true, desc = 'Op
 
 keymap('n', '<leader>ss', '<cmd>mksession!<CR>', { silent = true, desc = 'Save session' })
 keymap('n', '<leader>sl', '<cmd>source<CR>', { silent = true, desc = 'Load session' })
-keymap('n', '<leader>cd', '<cmd>lcd %:h<CR>', { silent = true, desc = 'Cnange directory current window' })
+keymap('n', '<leader>cd', '<cmd>:lua cd_and_notify("lcd")<CR>',
+    { silent = true, desc = 'Cnange directory for window' })
+keymap('n', '<leader>ctd', '<cmd>:lua cd_and_notify("tcd")<CR>',
+    { silent = true, desc = 'Cnange directory for tab' })

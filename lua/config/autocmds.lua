@@ -11,7 +11,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
--- Go to last loction when opening a buffer
+-- Go to last location when opening a buffer
 vim.api.nvim_create_autocmd('BufReadPost', {
   group = augroup 'last_loc',
   callback = function()
@@ -52,5 +52,17 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.keymap.set('n', 'q', '<cmd>close<cr>', { buffer = event.buf, silent = true })
+  end,
+})
+
+-- new tab change directory
+vim.api.nvim_create_autocmd("TabNewEntered", {
+  pattern = "*",
+  callback = function()
+    local path = vim.fn.expand("%:p")
+    if vim.fn.filereadable(path) then
+      local dirname = vim.fn.fnamemodify(path, ":h")
+      vim.cmd("tcd " .. dirname)
+    end
   end,
 })
