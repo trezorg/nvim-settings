@@ -33,20 +33,20 @@ return {
         { silent = true, desc = 'MarkdownPreviewStop' })
     end,
   },
-  {
-    'echasnovski/mini.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    version = false,
-    event = 'VeryLazy',
-    config = function(_, _) -- opts
-      require('mini.files').setup()
-      vim.keymap.set('n', '<leader>fm', '<cmd>:lua MiniFiles.open()<CR>', { silent = true, desc = 'Open Minifile' })
-      vim.keymap.set('n', '<leader>ftm', '<cmd>tabnew | :lua MiniFiles.open()<CR>',
-        { silent = true, desc = 'Open Minifile new tab' })
-      -- set termguicolors to enable highlight groups
-      vim.opt.termguicolors = true
-    end,
-  },
+  -- {
+  --   'echasnovski/mini.nvim',
+  --   dependencies = { 'nvim-tree/nvim-web-devicons' },
+  --   version = false,
+  --   event = 'VeryLazy',
+  --   config = function(_, _) -- opts
+  --     require('mini.files').setup()
+  --     vim.keymap.set('n', '<leader>fm', '<cmd>:lua MiniFiles.open()<CR>', { silent = true, desc = 'Open Minifile' })
+  --     vim.keymap.set('n', '<leader>ftm', '<cmd>tabnew | :lua MiniFiles.open()<CR>',
+  --       { silent = true, desc = 'Open Minifile new tab' })
+  --     -- set termguicolors to enable highlight groups
+  --     vim.opt.termguicolors = true
+  --   end,
+  -- },
   {
     "nvim-tree/nvim-tree.lua",
     version = "*",
