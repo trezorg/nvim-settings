@@ -17,6 +17,7 @@ return {
             { "<leader>fg",  "<cmd>Telescope git_files<cr>",                         desc = "Git Files" },
             { "<leader>fb",  "<cmd>Telescope buffers<cr>",                           desc = "Buffers" },
             { "<leader>fh",  "<cmd>Telescope help_tags<cr>",                         desc = "Help" },
+            { "<leader>sg",  "<cmd>Telescope live_grep<cr>",                         desc = "[S]earch by [G]rep" },
         },
         opts = {
             extensions = {
