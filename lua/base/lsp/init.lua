@@ -72,6 +72,7 @@ return {
             ensure_installed = {
                 'shfmt',
             },
+            log_level = vim.log.levels.DEBUG
         },
         config = function(_, opts)
             require('mason').setup(opts)

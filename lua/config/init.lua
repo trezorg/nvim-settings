@@ -13,7 +13,7 @@ return {
     solidty = true,
     terraform = true,
     vuejs = false,
-    typescript = false,
+    typescript = true,
     tailwind = false,
     svelte = false,
     react = false,
