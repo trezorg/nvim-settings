@@ -62,9 +62,12 @@ keymap({ 'n', 'i' }, '<C-S-Tab>', '<cmd>tabprevious<CR>')
 keymap({ 'n', 'i' }, '<C-Insert>', '<cmd>tabnew<CR>')
 keymap({ 'n', 'i' }, '<C-Delete>', '<cmd>tabclose<CR>')
 
-keymap('n', '<leader>fw', '<cmd>Lexplore %:p:h<CR>', { silent = true, desc = 'Open NetRW' })
-keymap('n', '<leader>ftt', '<cmd>tabnew | term<CR>', { silent = true, desc = 'Open terminal' })
-
+-- keymap('n', '<leader>fw', '<cmd>Lexplore %:p:h<CR>', { silent = true, desc = 'Open NetRW' })
+-- keymap('n', '<leader>ftt', '<cmd>tabnew | term<CR>', { silent = true, desc = 'Open terminal' })
+keymap('n', '<leader>ftt', '<cmd>ToggleTerm direction=tab<cr>', { silent = true, desc = 'Open terminal tab mode' })
+keymap('n', '<leader>ftf', '<cmd>ToggleTerm direction=float<cr>', { silent = true, desc = 'Open terminal float mode' })
+keymap('n', '<leader>fth', '<cmd>ToggleTerm size=30 direction=horizontal<cr>', { silent = true, desc = 'Open terminal horizontal mode' })
+keymap('n', '<leader>ftv', '<cmd>ToggleTerm size=30 direction=vertical<cr>', { silent = true, desc = 'Open terminal vertical mode' })
 keymap('n', '<leader>ss', '<cmd>mksession!<CR>', { silent = true, desc = 'Save session' })
 keymap('n', '<leader>sl', '<cmd>source<CR>', { silent = true, desc = 'Load session' })
 keymap('n', '<leader>cd', '<cmd>:lua cd_and_notify("lcd")<CR>',
