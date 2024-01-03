@@ -36,7 +36,12 @@ keymap('v', '<', '<gv')
 keymap('v', '>', '>gv')
 
 -- Paste over currently selected text without yanking it
-keymap('v', 'p', '"_dp')
+keymap('v', 'p', '"_dp', { silent = true, desc = 'Paste in visual mode' })
+keymap('v', 'P', '"_dP', { silent = true, desc = 'Paste in visual mode' })
+-- Search in visual mode
+keymap('v', 'g/', 'y/<C-R>"<CR>', { silent = true, desc = 'Search selected in visual mode' })
+-- Paste over word without yanking it
+keymap('n', 'S', '"_diwP', { silent = true, desc = 'Delete word and paste' })
 
 -- Insert blank line
 keymap('n', ']<Space>', 'o<Esc>')
@@ -44,17 +49,17 @@ keymap('n', '[<Space>', 'O<Esc>')
 
 -- Auto indent
 keymap('n', 'i', function()
-    if #vim.fn.getline '.' == 0 then
-        return [["_cc]]
-    else
-        return 'i'
-    end
+  if #vim.fn.getline '.' == 0 then
+    return [["_cc]]
+  else
+    return 'i'
+  end
 end, { expr = true })
 
-function cd_and_notify(command)
-    local path = vim.fn.expand('%:h')
-    vim.cmd(command .. " " .. path)
-    vim.notify(path)
+function CdAndNotify(command)
+  local path = vim.fn.expand('%:h')
+  vim.cmd(command .. " " .. path)
+  vim.notify(path)
 end
 
 keymap({ 'n', 'i' }, '<C-Tab>', '<cmd>tabnext<CR>')
@@ -62,15 +67,13 @@ keymap({ 'n', 'i' }, '<C-S-Tab>', '<cmd>tabprevious<CR>')
 keymap({ 'n', 'i' }, '<C-Insert>', '<cmd>tabnew<CR>')
 keymap({ 'n', 'i' }, '<C-Delete>', '<cmd>tabclose<CR>')
 
--- keymap('n', '<leader>fw', '<cmd>Lexplore %:p:h<CR>', { silent = true, desc = 'Open NetRW' })
--- keymap('n', '<leader>ftt', '<cmd>tabnew | term<CR>', { silent = true, desc = 'Open terminal' })
 keymap('n', '<leader>ftt', '<cmd>ToggleTerm direction=tab<cr>', { silent = true, desc = 'Open terminal tab mode' })
 keymap('n', '<leader>ftf', '<cmd>ToggleTerm direction=float<cr>', { silent = true, desc = 'Open terminal float mode' })
-keymap('n', '<leader>fth', '<cmd>ToggleTerm size=30 direction=horizontal<cr>', { silent = true, desc = 'Open terminal horizontal mode' })
-keymap('n', '<leader>ftv', '<cmd>ToggleTerm size=30 direction=vertical<cr>', { silent = true, desc = 'Open terminal vertical mode' })
+keymap('n', '<leader>fth', '<cmd>ToggleTerm size=30 direction=horizontal<cr>',
+  { silent = true, desc = 'Open terminal horizontal mode' })
+keymap('n', '<leader>ftv', '<cmd>ToggleTerm size=30 direction=vertical<cr>',
+  { silent = true, desc = 'Open terminal vertical mode' })
 keymap('n', '<leader>ss', '<cmd>mksession!<CR>', { silent = true, desc = 'Save session' })
 keymap('n', '<leader>sl', '<cmd>source<CR>', { silent = true, desc = 'Load session' })
-keymap('n', '<leader>cd', '<cmd>:lua cd_and_notify("lcd")<CR>',
-    { silent = true, desc = 'Cnange directory for window' })
-keymap('n', '<leader>ctd', '<cmd>:lua cd_and_notify("tcd")<CR>',
-    { silent = true, desc = 'Cnange directory for tab' })
+keymap('n', '<leader>cd', '<cmd>:lua CdAndNotify("lcd")<CR>', { silent = true, desc = 'Cnange directory for window' })
+keymap('n', '<leader>ctd', '<cmd>:lua CdAndNotify("tcd")<CR>', { silent = true, desc = 'Cnange directory for tab' })

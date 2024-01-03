@@ -62,6 +62,7 @@ return {
         },
         config = function(plugin, opts)
             require('base.lsp.servers').setup(plugin, opts)
+            vim.lsp.set_log_level("debug")
         end,
     },
     {
