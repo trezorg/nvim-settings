@@ -14,7 +14,18 @@ return {
     opts = function(_, opts)
       vim.list_extend(
         opts.ensure_installed,
-        { 'delve', 'gotests', 'golangci-lint', 'gofumpt', 'goimports', 'golangci-lint-langserver', 'impl', 'gomodifytags', 'iferr', 'gotestsum' }
+        {
+          'delve',
+          'gotests',
+          'golangci-lint',
+          'gofumpt',
+          'goimports',
+          'golangci-lint-langserver',
+          'impl',
+          'gomodifytags',
+          'iferr',
+          'gotestsum'
+        }
       )
     end,
   },
@@ -45,6 +56,20 @@ return {
             gopls = {
               analyses = {
                 unusedparams = true,
+                fieldalignment = true,
+                nilness = true,
+                unusedwrite = true,
+                useany = true,
+              },
+              codelenses = {
+                gc_details = true,
+                generate = true,
+                regenerate_cgo = true,
+                run_govulncheck = true,
+                test = true,
+                tidy = true,
+                upgrade_dependency = true,
+                vendor = true,
               },
               hints = {
                 assignVariableTypes = true,
@@ -57,6 +82,11 @@ return {
               },
               staticcheck = true,
               semanticTokens = true,
+              gofumpt = true,
+              usePlaceholders = true,
+              completeUnimported = true,
+              completeFunctionCalls = true,
+              directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules", "-.nvim" },
             },
           },
         },
@@ -75,13 +105,12 @@ return {
             -- stylua: ignore
             --
             if client.name == "gopls" then
-              map("n", "<leader>ll", function() vim.lsp.codelens.run() end, "Code Lens" )
+              map("n", "<leader>ll", function() vim.lsp.codelens.run() end, "Code Lens")
               map("n", "<leader>ly", "<cmd>GoModTidy<cr>", "Go Mod Tidy")
               map("n", "<leader>lc", "<cmd>GoCoverage<Cr>", "Go Test Coverage")
               map("n", "<leader>lt", "<cmd>GoTest<Cr>", "Go Test")
               map("n", "<leader>lR", "<cmd>GoRun<Cr>", "Go Run")
               map("n", "<leader>dT", "<cmd>lua require('dap-go').debug_test()<cr>", "Go Debug Test")
-              
               if not client.server_capabilities.semanticTokensProvider then
                 local semantic = client.config.capabilities.textDocument.semanticTokens
                 client.server_capabilities.semanticTokensProvider = {
