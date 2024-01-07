@@ -17,6 +17,7 @@ return {
   },
   {
     'tpope/vim-dadbod',
+    event = 'VeryLazy',
     dependencies = {
       'kristijanhusak/vim-dadbod-ui',
       'kristijanhusak/vim-dadbod-completion',
@@ -44,6 +45,9 @@ return {
           vim.schedule(db_completion)
         end,
       })
+      vim.g.sql_type_default = 'pgsql'
+      vim.g.vim_dadbod_completion_mark = ''
+      vim.g.vim_dadbod_prefer_lowercase = 1
     end,
     cmd = { 'DBUIToggle', 'DBUI', 'DBUIAddConnection', 'DBUIFindBuffer', 'DBUIRenameBuffer', 'DBUILastQueryInfo' },
   },
@@ -64,8 +68,41 @@ return {
     'neovim/nvim-lspconfig',
     opts = {
       servers = {
-        sqlls = {},
-      },
-    },
-  },
+        sqlls = {
+          cmd = { 'sql-language-server', 'up', '--method', 'stdio', '-d' },
+          -- filetypes = { 'sql', 'mysql', 'psql' },
+          filetypes = { 'sql' },
+          root_dir =
+              function()
+                return vim.loop.cwd()
+              end,
+          settings = {
+            sqlLanguageServer = {
+              lint = {
+                rules = {
+                  ['align-column-to-the-first'] = 'error',
+                  ['column-new-line'] = 'error',
+                  ['linebreak-after-clause-keyword'] = 'error',
+                  ['reserved-word-case'] = { 'error', 'lower' },
+                  ['space-surrounding-operators'] = 'error',
+                  ['where-clause-new-line'] = 'error',
+                  ['align-where-clause-to-the-first'] = 'error'
+                }
+              }
+            }
+          }
+        },
+        postgres_lsp = {
+          name = 'postgres_lsp',
+          cmd = { 'postgres_lsp' },
+          filetypes = { 'sql' },
+          single_file_support = true,
+          root_dir =
+              function()
+                return vim.loop.cwd()
+              end
+        }
+      }
+    }
+  }
 }
