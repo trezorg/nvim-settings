@@ -111,6 +111,7 @@ return {
       },
       setup = {
         pyright = function(_, _)
+          vim.g.python_host_prog = '/home/igor/.pyenv/shims/python3'
           local lsp_utils = require 'base.lsp.utils'
           lsp_utils.on_attach(function(client, bufnr)
             local map = function(mode, lhs, rhs, desc)
