@@ -139,7 +139,13 @@ return {
     },
     opts = function(_, opts)
       vim.list_extend(opts.adapters, {
-        require 'neotest-go',
+        require("neotest-go")({
+          recursive_run = false,
+          experimental = {
+            test_table = true,
+          },
+          args = { "-count=1", "-timeout=60s" }
+        })
       })
     end,
   },

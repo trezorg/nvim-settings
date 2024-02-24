@@ -236,6 +236,7 @@ return {
     opts = function()
       return {
         adapters = {
+          require("neotest-plenary"),
           require 'neotest-vim-test' {
             ignore_file_types = { 'python', 'vim', 'lua' },
           },
