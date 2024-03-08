@@ -8,6 +8,7 @@ return {
     helm = true,
     html = true,
     json = true,
+    yaml = true,
     lua = true,
     protobuf = true,
     python = true,
