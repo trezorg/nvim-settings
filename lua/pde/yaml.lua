@@ -2,6 +2,7 @@ if not require("config").pde.yaml then
   return {}
 end
 
+
 return {
   {
     "nvim-treesitter/nvim-treesitter",
@@ -24,6 +25,11 @@ return {
         yamlls = {
           settings = {
             yaml = {
+              completion = true,
+              schemas = {
+                ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+                -- ["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.0-standalone-strict/all.json"] = "/*.k8s.yaml",
+              },
             },
           },
         },
