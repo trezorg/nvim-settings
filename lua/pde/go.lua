@@ -82,7 +82,7 @@ return {
               },
               staticcheck = true,
               semanticTokens = true,
-              gofumpt = false,
+              gofumpt = true,
               usePlaceholders = true,
               completeUnimported = true,
               completeFunctionCalls = true,
