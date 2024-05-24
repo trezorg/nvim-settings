@@ -55,11 +55,16 @@ return {
           settings = {
             gopls = {
               analyses = {
+                unusedvariable = true,
+                unusedresult = true,
                 unusedparams = true,
+                unusedwrite = true,
                 fieldalignment = true,
                 nilness = true,
-                unusedwrite = true,
                 useany = true,
+                unsafeptr = true,
+                unreachable = true,
+                tests = true,
               },
               codelenses = {
                 gc_details = true,
