@@ -22,7 +22,7 @@ return {
     react = false,
     java = false,
     csharp = false,
-    cpp = true,
+    cpp = false,
     angular = false,
   },
 }

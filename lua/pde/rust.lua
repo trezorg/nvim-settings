@@ -55,9 +55,9 @@ return {
             -- stylua: ignore
             if client.name == "rust_analyzer" then
               map("n", "<leader>le", "<cmd>RustRunnables<cr>", "Runnables")
-              map("n", "<leader>ll", function() vim.lsp.codelens.run() end, "Code Lens" )
-              map("n", "<leader>lt", "<cmd>Cargo test<cr>", "Cargo test" )
-              map("n", "<leader>lR", "<cmd>Cargo run<cr>", "Cargo run" )
+              map("n", "<leader>ll", function() vim.lsp.codelens.run() end, "Code Lens")
+              map("n", "<leader>lt", "<cmd>Cargo test<cr>", "Cargo test")
+              map("n", "<leader>lR", "<cmd>Cargo run<cr>", "Cargo run")
             end
           end)
 
@@ -167,7 +167,10 @@ return {
     },
     opts = function(_, opts)
       vim.list_extend(opts.adapters, {
-        require 'neotest-rust',
+        -- curl -LsSf https://get.nexte.st/latest/linux | tar zxf - -C ${CARGO_HOME:-~/.cargo}/bin
+        require('neotest-rust') {
+          args = { "--no-capture" }
+        },
       })
     end,
   },
