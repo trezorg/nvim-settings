@@ -77,3 +77,6 @@ webhook
 forwarding
 endorphina
 localhost
+ceph
+metastore
+metadata
