@@ -4,8 +4,15 @@ end
 
 local function set_yaml_for_helm_files()
   vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
-    pattern = { '*/templates/*.yaml', '*/templates/*.tpl', '*.gotmpl', 'helmfile*.yaml' },
-    callback = function()
+    pattern = {
+      '*/templates/*.yaml',
+      '*/templates/*.yml',
+      '*/templates/*.tpl',
+      '*.gotmpl',
+      'helmfile*.yaml'
+    },
+    group = vim.api.nvim_create_augroup("set_filetype_of_helm", {}),
+    callback = function(ev)
       vim.opt_local.filetype = 'helm'
     end
   })
@@ -35,7 +42,7 @@ return {
             configs.helm_ls = {
               default_config = {
                 cmd = { 'helm_ls', 'serve' },
-                filetypes = { 'helm' },
+                filetypes = { "helm", "helmfile" },
                 root_dir = function(fname)
                   return util.root_pattern 'Chart.yaml' (fname)
                 end,
@@ -46,8 +53,11 @@ return {
           set_yaml_for_helm_files()
 
           lspconfig.helm_ls.setup {
-            filetypes = { 'helm' },
+            filetypes = { "helm", "helmfile" },
             cmd = { 'helm_ls', 'serve' },
+            root_dir = function(fname)
+              return util.root_pattern 'Chart.yaml' (fname)
+            end,
           }
         end,
       },

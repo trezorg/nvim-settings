@@ -2,6 +2,44 @@ if not require("config").pde.yaml then
   return {}
 end
 
+local function disable_yamlls_for_helm()
+  vim.api.nvim_create_autocmd("LspAttach", {
+    group = vim.api.nvim_create_augroup("detach_yamlls_for_helm", {}),
+    callback = function(args)
+      local bufnr = args.buf
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      if client ~= nil then
+        if client.config.name == 'yamlls' and vim.bo.filetype == 'helm' then
+          vim.lsp.buf_detach_client(bufnr, client.id)
+          return
+        end
+        if client.config.name == 'helm_ls' then
+          local clients = vim.lsp.get_clients()
+          for _, loaded_client in pairs(clients) do
+            if loaded_client.config.name == 'yamlls' then
+              if vim.lsp.buf_is_attached(bufnr, loaded_client.id) then
+                vim.lsp.buf_detach_client(bufnr, loaded_client.id)
+                return
+              end
+            end
+          end
+        end
+        if client.config.name == 'yamlls' then
+          local clients = vim.lsp.get_clients()
+          for _, loaded_client in pairs(clients) do
+            if loaded_client.config.name == 'helm_ls' then
+              if vim.lsp.buf_is_attached(bufnr, client.id) then
+                vim.lsp.buf_detach_client(bufnr, client.id)
+                return
+              end
+            end
+          end
+        end
+      end
+    end,
+  })
+end
+
 return {
   {
     "nvim-treesitter/nvim-treesitter",
@@ -42,6 +80,7 @@ return {
             cmd = { "yaml-language-server", "--stdio" },
             filetypes = { "yaml", "yaml.docker-compose", "yaml.gitlab" },
           }
+          disable_yamlls_for_helm()
         end,
       },
     },
