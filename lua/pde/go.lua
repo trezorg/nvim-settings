@@ -116,6 +116,8 @@ return {
               map("n", "<leader>lt", "<cmd>GoTest<Cr>", "Go Test")
               map("n", "<leader>lR", "<cmd>GoRun<Cr>", "Go Run")
               map("n", "<leader>dT", "<cmd>lua require('dap-go').debug_test()<cr>", "Go Debug Test")
+              map("n", "<leader>tn", "<cmd>w|lua require('neotest').run.run({extra_args = {'-race'}})<cr>",
+                "Nearest with race")
               if not client.server_capabilities.semanticTokensProvider then
                 local semantic = client.config.capabilities.textDocument.semanticTokens
                 client.server_capabilities.semanticTokensProvider = {
@@ -143,9 +145,19 @@ return {
       'nvim-neotest/neotest-go',
     },
     opts = function(_, opts)
+      local neotest_ns = vim.api.nvim_create_namespace("neotest")
+      vim.diagnostic.config({
+        virtual_text = {
+          format = function(diagnostic)
+            local message =
+                diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+            return message
+          end,
+        },
+      }, neotest_ns)
       vim.list_extend(opts.adapters, {
         require("neotest-go")({
-          recursive_run = false,
+          recursive_run = true,
           experimental = {
             test_table = true,
           },
