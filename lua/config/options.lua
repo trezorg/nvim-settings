@@ -54,7 +54,10 @@ opt.history = 10000
 opt.shell = 'zsh'
 opt.swapfile = false
 
-opt.spelllang = 'en_us'
+opt.spelllang = 'en_us,ru_ru'
+local eng_spellfile = vim.fn.expand('$HOME/.config/nvim/spell/en.utf-8.add')
+local ru_spellfile = vim.fn.expand('$HOME/.config/nvim/spell/ru.utf-8.add')
+opt.spellfile = ("%s,%s"):format(eng_spellfile, ru_spellfile)
 opt.spell = true
 opt.autochdir = false
 opt.cursorcolumn = false

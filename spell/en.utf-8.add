@@ -83,3 +83,6 @@ metadata
 multipart
 pid
 async
+kafka
+yaml
+strimzi
