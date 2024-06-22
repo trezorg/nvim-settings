@@ -2,7 +2,6 @@ if not require("config").pde.yaml then
   return {}
 end
 
-
 return {
   {
     "nvim-treesitter/nvim-treesitter",
@@ -26,13 +25,24 @@ return {
           settings = {
             yaml = {
               completion = true,
+              single_file_support = true,
               schemas = {
                 ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
-                -- ["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.0-standalone-strict/all.json"] = "/*.k8s.yaml",
+                ["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.1-standalone-strict/all.json"] =
+                "/*.k8s.yaml",
               },
             },
           },
         },
+      },
+      setup = {
+        yamlls = function(_, _)
+          local lspconfig = require 'lspconfig'
+          lspconfig.yamlls.setup {
+            cmd = { "yaml-language-server", "--stdio" },
+            filetypes = { "yaml", "yaml.docker-compose", "yaml.gitlab" },
+          }
+        end,
       },
     },
   },
