@@ -80,7 +80,7 @@ return {
             cmd = { "yaml-language-server", "--stdio" },
             filetypes = { "yaml", "yaml.docker-compose", "yaml.gitlab" },
           }
-          disable_yamlls_for_helm()
+          -- disable_yamlls_for_helm()
         end,
       },
     },
