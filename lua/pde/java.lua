@@ -23,7 +23,8 @@ local function get_bundles()
   local java_debug_path = java_debug:get_install_path()
   local java_test_path = java_test:get_install_path()
   local bundles = {}
-  vim.list_extend(bundles, vim.split(vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar"), "\n"))
+  vim.list_extend(bundles,
+    vim.split(vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar"), "\n"))
   vim.list_extend(bundles, vim.split(vim.fn.glob(java_test_path .. "/extension/server/*.jar"), "\n"))
   return bundles
 end
@@ -90,8 +91,8 @@ return {
 
             -- Register keymappings
             local wk = require "which-key"
-            local keys = { mode = { "n", "v" }, ["<leader>lj"] = { name = "+Java" } }
-            wk.register(keys)
+            local keys = { mode = { "n", "v" }, { "<leader>lj", group = "+Java" } }
+            wk.add(keys)
 
             map("n", "<leader>ljo", jdtls.organize_imports, "Organize Imports")
             map("n", "<leader>ljv", jdtls.extract_variable, "Extract Variable")

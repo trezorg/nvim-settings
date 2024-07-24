@@ -68,8 +68,8 @@ return {
 
               -- Register keymappings
               local wk = require 'which-key'
-              local keys = { mode = { 'n', 'v' }, ['<leader>lc'] = { name = '+Crates' } }
-              wk.register(keys)
+              local keys = { mode = { 'n', 'v' }, { '<leader>lc', group = '+Crates' } }
+              wk.add(keys)
 
               local map = function(mode, lhs, rhs, desc)
                 if desc then

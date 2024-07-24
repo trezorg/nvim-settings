@@ -123,10 +123,8 @@ return {
   {
     'folke/which-key.nvim',
     event = 'VeryLazy',
-    opts = {
-      defaults = {
-        ['<leader>g'] = { name = '+Git' },
-      },
+    keys = {
+      { '<leader>g', group = '+Git' },
     },
   },
   {

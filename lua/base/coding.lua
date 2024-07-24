@@ -187,11 +187,9 @@ return {
   {
     'folke/which-key.nvim',
     event = 'VeryLazy',
-    opts = {
-      defaults = {
-        ['<leader>t'] = { name = '+Test' },
-        ['<leader>tt'] = { name = '+Task' },
-      },
+    keys = {
+      { '<leader>t',  group = '+Test' },
+      { '<leader>tt', group = '+Task' },
     },
   },
   {

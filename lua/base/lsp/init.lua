@@ -2,10 +2,8 @@ return {
   {
     'folke/which-key.nvim',
     event = 'VeryLazy',
-    opts = {
-      defaults = {
-        ['<leader>l'] = { name = '+LSP' },
-      },
+    keys = {
+      { '<leader>l', group = '+LSP' },
     },
   },
   {

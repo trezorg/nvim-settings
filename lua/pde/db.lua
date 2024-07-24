@@ -54,14 +54,12 @@ return {
   {
     'folke/which-key.nvim',
     event = 'VeryLazy',
-    opts = {
-      defaults = {
-        ['<leader>D'] = { name = '+Database' },
-        ['<leader>Du'] = { cmd = '<Cmd>DBUIToggle<Cr>', desc = 'Toggle UI' },
-        ['<leader>Df'] = { cmd = '<Cmd>DBUIFindBuffer<Cr>', desc = 'Find buffer' },
-        ['<leader>Dr'] = { cmd = '<Cmd>DBUIRenameBuffer<Cr>', desc = 'Rename buffer' },
-        ['<leader>Dq'] = { cmd = '<Cmd>DBUILastQueryInfo<Cr>', desc = 'Last query info' },
-      },
+    keys = {
+      { "<leader>D",  group = "+Database" },
+      { '<leader>Du', '<Cmd>DBUIToggle<Cr>',        desc = 'Toggle UI' },
+      { "<leader>Df", "<Cmd>DBUIFindBuffer<Cr>",    desc = "Find buffer" },
+      { '<leader>Dr', '<Cmd>DBUIRenameBuffer<Cr>',  desc = 'Rename buffer' },
+      { '<leader>Dq', '<Cmd>DBUILastQueryInfo<Cr>', desc = 'Last query info' },
     },
   },
   {

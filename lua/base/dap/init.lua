@@ -2,10 +2,8 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    opts = {
-      defaults = {
-        ["<leader>d"] = { name = "+DAP" },
-      },
+    keys = {
+      { "<leader>d", group = "+DAP" },
     },
   },
   {
