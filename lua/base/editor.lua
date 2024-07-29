@@ -75,7 +75,8 @@ return {
         plugins = { spelling = true },
         replace = { ['<leader>'] = 'SPC' },
         triggers = {
-          { "<auto>", mode = "nxsot" },
+          { "<auto>", mode = "nixsotc" },
+          { "a",      mode = { "n", "v" } },
         },
         win = {
           border = 'single', -- none, single, double, shadow
