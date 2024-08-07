@@ -93,3 +93,7 @@ prometheus
 jmx
 ethereum
 rados
+librados
+use
+init
+bootsrapper

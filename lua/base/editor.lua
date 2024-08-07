@@ -74,8 +74,9 @@ return {
         show_help = true,
         plugins = { spelling = true },
         replace = { ['<leader>'] = 'SPC' },
-        triggers = {
-        },
+        -- triggers = {
+        --   -- { "<auto>", mode = "nixsotc" },
+        -- },
         win = {
           border = 'single', -- none, single, double, shadow
           -- position = 'bottom',      -- bottom, top
