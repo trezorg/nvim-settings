@@ -104,3 +104,6 @@ tcp
 S3
 pprof
 chunkworker
+pyright
+noqa
+noqa
