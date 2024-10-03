@@ -1,4 +1,4 @@
-if not require('config').pde.helm then
+if not require('config').pde.protobuf then
   return {}
 end
 
@@ -21,18 +21,18 @@ return {
       servers = {
         bufls = {
         },
-        setup = {
-          helm_ls = function(_, _)
-            local lspconfig = require 'lspconfig'
-            local util = require 'lspconfig.util'
+      },
+      setup = {
+        bufls = function(_, _)
+          local lspconfig = require 'lspconfig'
+          local util = require 'lspconfig.util'
 
-            lspconfig.helm_ls.setup {
-              filetypes = { 'proto' },
-              cmd = { 'bufls', 'serve' },
-              root_dir = util.root_pattern("buf.work.yaml", ".git"),
-            }
-          end,
-        },
+          lspconfig.bufls.setup {
+            filetypes = { 'proto' },
+            cmd = { 'bufls', 'serve' },
+            root_dir = util.root_pattern("buf.work.yaml", ".git"),
+          }
+        end,
       },
     },
   }
