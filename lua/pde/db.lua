@@ -69,7 +69,7 @@ return {
         sqlls = {
           cmd = { 'sql-language-server', 'up', '--method', 'stdio', '-d' },
           -- filetypes = { 'sql', 'mysql', 'psql' },
-          filetypes = { 'sql' },
+          filetypes = { 'psql' },
           root_dir =
               function()
                 return vim.loop.cwd()
@@ -92,7 +92,7 @@ return {
         },
         postgres_lsp = {
           name = 'postgres_lsp',
-          cmd = { 'postgres_lsp' },
+          cmd = { 'pglsp' },
           filetypes = { 'sql' },
           single_file_support = true,
           root_dir =
