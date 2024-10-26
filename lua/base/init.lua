@@ -192,6 +192,14 @@ return {
       end
 
       vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+      local keymap = vim.keymap.set
+      keymap('n', '<leader>ftt', '<cmd>ToggleTerm direction=tab<cr>', { silent = true, desc = 'Open terminal tab mode' })
+      keymap('n', '<leader>ftf', '<cmd>ToggleTerm direction=float<cr>',
+        { silent = true, desc = 'Open terminal float mode' })
+      keymap('n', '<leader>fth', '<cmd>ToggleTerm size=30 direction=horizontal<cr>',
+        { silent = true, desc = 'Open terminal horizontal mode' })
+      keymap('n', '<leader>ftv', '<cmd>ToggleTerm size=30 direction=vertical<cr>',
+        { silent = true, desc = 'Open terminal vertical mode' })
     end,
   },
 }
