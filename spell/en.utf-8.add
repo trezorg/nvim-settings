@@ -110,3 +110,4 @@ noqa
 clustergroup
 authorizer
 versioning
+redis
