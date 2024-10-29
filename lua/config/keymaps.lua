@@ -42,6 +42,8 @@ keymap('v', 'P', '"_dP', { silent = true, desc = 'Paste in visual mode' })
 keymap('v', 'g/', 'y/<C-R>"<CR>', { silent = true, desc = 'Search selected in visual mode' })
 -- Paste over word without yanking it
 keymap('n', 'S', '"_diwP', { silent = true, desc = 'Delete word and paste' })
+-- Paste over string without yanking it
+keymap('n', 'ss', '"_ddP', { silent = true, desc = 'Delete word and paste' })
 
 -- Insert blank line
 keymap('n', ']<Space>', 'o<Esc>')
