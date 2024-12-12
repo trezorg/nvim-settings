@@ -81,17 +81,17 @@ return {
   {
     'williamboman/mason.nvim',
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { 'debugpy', 'black', 'ruff', 'isort', "mypy" })
+      -- vim.list_extend(opts.ensure_installed, { 'debugpy', 'black', 'ruff', 'isort', "mypy" })
+      vim.list_extend(opts.ensure_installed, { 'debugpy', 'black', 'isort', "mypy" })
     end,
   },
   {
     'neovim/nvim-lspconfig',
     opts = {
       servers = {
-        ruff_lsp = {
+        ruff = {
           init_options = {
             settings = {
-              args = {},
             },
           },
         },
