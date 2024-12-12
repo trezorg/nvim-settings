@@ -3,10 +3,27 @@ local M = {}
 function M.on_attach(client, buffer)
   local self = M.new(client, buffer)
 
+  local lsp_definitions_new_tab = function()
+    require('telescope.builtin').lsp_definitions({ jump_type = 'tab drop', reuse_win = true })
+  end
+  local lsp_references_new_tab = function()
+    require('telescope.builtin').lsp_references({ jump_type = 'tab drop', reuse_win = true })
+  end
+  local lsp_implementations_new_tag = function()
+    require('telescope.builtin').lsp_implementations({ jump_type = 'tab drop', reuse_win = true })
+  end
+  local lsp_type_definitions_new_tab = function()
+    require('telescope.builtin').lsp_type_definitions({ jump_type = 'tab drop', reuse_win = true })
+  end
+
   self:map('gd', 'Telescope lsp_definitions', { desc = 'Goto Definition' })
+  self:map('gtd', lsp_definitions_new_tab, { desc = 'Goto Definition in new tab' })
   self:map('gr', 'Telescope lsp_references', { desc = 'References' })
+  self:map('gtr', lsp_references_new_tab, { desc = 'References in new tab' })
   self:map('gI', 'Telescope lsp_implementations', { desc = 'Goto Implementation' })
+  self:map('gtI', lsp_implementations_new_tag, { desc = 'Goto Implementation in new tab' })
   self:map('gb', 'Telescope lsp_type_definitions', { desc = 'Goto Type Definition' })
+  self:map('gtb', lsp_type_definitions_new_tab, { desc = 'Goto Type Definition in new tab' })
   self:map('K', vim.lsp.buf.hover, { desc = 'Hover' })
   self:map('gK', vim.lsp.buf.signature_help, { desc = 'Signature Help', has = 'signatureHelp' })
   self:map('[d', M.diagnostic_goto(true), { desc = 'Next Diagnostic' })
