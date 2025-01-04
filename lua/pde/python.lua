@@ -37,7 +37,12 @@ return {
   {
     "linux-cultist/venv-selector.nvim",
     branch = "regexp",
-    dependencies = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim", "mfussenegger/nvim-dap-python" },
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "nvim-telescope/telescope.nvim",
+      "mfussenegger/nvim-dap-python",
+      "mfussenegger/nvim-dap"
+    },
     event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
     keys = {
       -- Keymap to open VenvSelector to pick a venv.
@@ -49,19 +54,19 @@ return {
       require("venv-selector").setup({
         name = { "venv", ".venv" }
       })
-      local find_venv = function()
-        local venv = vim.fn.finddir(".venv", vim.fn.getcwd() .. ";")
-        if venv ~= "" then
-          require("venv-selector").retrieve_from_cache()
-        end
-      end
-      vim.api.nvim_create_autocmd("VimEnter", {
-        desc = "Auto select virtualenv Nvim open",
-        pattern = "*",
-        callback = find_venv,
-        once = true,
-      })
-      find_venv()
+      -- local find_venv = function()
+      --   local venv = vim.fn.finddir(".venv", vim.fn.getcwd() .. ";")
+      --   if venv ~= "" then
+      --     require("venv-selector").retrieve_from_cache()
+      --   end
+      -- end
+      -- vim.api.nvim_create_autocmd("VimEnter", {
+      --   desc = "Auto select virtualenv Nvim open",
+      --   pattern = "*",
+      --   callback = find_venv,
+      --   once = true,
+      -- })
+      -- find_venv()
     end
   },
   {
