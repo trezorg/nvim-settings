@@ -35,39 +35,26 @@ return {
     end,
   },
   {
-    "linux-cultist/venv-selector.nvim",
-    branch = "regexp",
+    'linux-cultist/venv-selector.nvim',
+    branch = 'regexp',
     dependencies = {
-      "neovim/nvim-lspconfig",
-      "nvim-telescope/telescope.nvim",
-      "mfussenegger/nvim-dap-python",
-      "mfussenegger/nvim-dap"
+      'neovim/nvim-lspconfig',
+      'nvim-telescope/telescope.nvim',
+      'mfussenegger/nvim-dap-python',
+      'mfussenegger/nvim-dap',
     },
-    event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
+    event = 'VeryLazy', -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
     keys = {
       -- Keymap to open VenvSelector to pick a venv.
-      { "<leader>vs", "<cmd>VenvSelect<cr>" },
+      { '<leader>vs', '<cmd>VenvSelect<cr>' },
       -- Keymap to retrieve the venv from a cache (the one previously used for the same project directory).
-      { "<leader>vc", "<cmd>VenvSelectCached<cr>" },
+      { '<leader>vc', '<cmd>VenvSelectCached<cr>' },
     },
     config = function()
-      require("venv-selector").setup({
-        name = { "venv", ".venv" }
-      })
-      -- local find_venv = function()
-      --   local venv = vim.fn.finddir(".venv", vim.fn.getcwd() .. ";")
-      --   if venv ~= "" then
-      --     require("venv-selector").retrieve_from_cache()
-      --   end
-      -- end
-      -- vim.api.nvim_create_autocmd("VimEnter", {
-      --   desc = "Auto select virtualenv Nvim open",
-      --   pattern = "*",
-      --   callback = find_venv,
-      --   once = true,
-      -- })
-      -- find_venv()
-    end
+      require('venv-selector').setup {
+        name = { 'venv', '.venv' },
+      }
+    end,
   },
   {
     'trezorg/poet-v',
@@ -87,7 +74,7 @@ return {
     'williamboman/mason.nvim',
     opts = function(_, opts)
       -- vim.list_extend(opts.ensure_installed, { 'debugpy', 'black', 'ruff', 'isort', "mypy" })
-      vim.list_extend(opts.ensure_installed, { 'debugpy', 'black', 'isort', "mypy" })
+      vim.list_extend(opts.ensure_installed, { 'debugpy', 'black', 'isort', 'mypy', 'ruff', 'python-lsp-server' })
     end,
   },
   {
@@ -96,8 +83,7 @@ return {
       servers = {
         ruff = {
           init_options = {
-            settings = {
-            },
+            settings = {},
           },
         },
         pyright = {
@@ -112,6 +98,31 @@ return {
                 stubPath = vim.fn.stdpath 'data' .. '/lazy/python-type-stubs/stubs',
               },
             },
+          },
+        },
+        pylsp = {
+          settings = {
+            pylsp = {
+              plugins = {
+                -- formatter options
+                black = { enabled = true },
+                autopep8 = { enabled = false },
+                yapf = { enabled = false },
+                -- linter options
+                pylint = { enabled = true, executable = 'pylint' },
+                pyflakes = { enabled = false },
+                pycodestyle = { enabled = false },
+                -- type checker
+                pylsp_mypy = { enabled = true },
+                -- auto-completion options
+                jedi_completion = { fuzzy = true },
+                -- import sorting
+                pyls_isort = { enabled = true },
+              },
+            },
+          },
+          flags = {
+            debounce_text_changes = 200,
           },
         },
       },
@@ -166,11 +177,11 @@ return {
     cond = false,
   },
   {
-    "ellisonleao/dotenv.nvim",
+    'ellisonleao/dotenv.nvim',
     lazy = false,
     opts = {
       enable_on_load = true, -- will load your .env file upon loading a buffer
-      verbose = false,       -- show error notification if .env file is not found and if .env is loaded
+      verbose = false, -- show error notification if .env file is not found and if .env is loaded
     },
   },
 }
