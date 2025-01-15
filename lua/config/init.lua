@@ -3,6 +3,7 @@ return {
     docker = true,
     ansible = true,
     bash = true,
+    nginx = true,
     db = true,
     go = true,
     helm = true,
