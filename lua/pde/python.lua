@@ -73,7 +73,6 @@ return {
   {
     'williamboman/mason.nvim',
     opts = function(_, opts)
-      -- vim.list_extend(opts.ensure_installed, { 'debugpy', 'black', 'ruff', 'isort', "mypy" })
       vim.list_extend(opts.ensure_installed, { 'debugpy', 'black', 'isort', 'mypy', 'ruff', 'python-lsp-server' })
     end,
   },
@@ -109,7 +108,7 @@ return {
                 autopep8 = { enabled = false },
                 yapf = { enabled = false },
                 -- linter options
-                pylint = { enabled = true, executable = 'pylint' },
+                pylint = { enabled = false, executable = 'pylint' },
                 pyflakes = { enabled = false },
                 pycodestyle = { enabled = false },
                 -- type checker
