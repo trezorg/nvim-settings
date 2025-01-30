@@ -53,17 +53,9 @@ return {
     config = function()
       require('venv-selector').setup {
         name = { 'venv', '.venv' },
+        dap_enabled = true,
+        poetry_path = '~/.cache/pypoetry/virtualenvs'
       }
-    end,
-  },
-  {
-    'trezorg/poet-v',
-    lazy = false,
-    -- event = 'VeryLazy',
-    init = function()
-      vim.g.poetv_auto_activate = 1
-      vim.g.poetv_set_environment = 1
-      vim.g.poetv_executables = { 'pipenv', 'poetry' }
     end,
   },
   {
