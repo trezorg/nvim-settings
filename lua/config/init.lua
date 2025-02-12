@@ -1,5 +1,6 @@
 return {
   pde = {
+    gitlab = true,
     docker = true,
     ansible = true,
     bash = true,
