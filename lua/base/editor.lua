@@ -7,6 +7,7 @@ return {
         'nvim-telescope/telescope-file-browser.nvim',
         dependencies = { 'nvim-lua/plenary.nvim' },
       },
+      "nvim-telescope/telescope-ui-select.nvim",
     },
     cmd = 'Telescope',
     -- stylua: ignore
