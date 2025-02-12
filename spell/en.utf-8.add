@@ -117,3 +117,5 @@ devops
 serviceAccounts
 shellcheck
 kms
+allocatable
+TracerProvider
