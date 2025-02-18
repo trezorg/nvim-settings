@@ -87,7 +87,6 @@ return {
                 useLibraryCodeForTypes = true,
                 typeCheckingMode = "standard",
                 autoImportCompletions = true,
-                reportAny = false,
                 reportMissingImports = "error",
                 stubPath = vim.fn.stdpath 'data' .. '/lazy/python-type-stubs/stubs',
                 inlayHints = {
