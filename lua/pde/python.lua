@@ -65,7 +65,8 @@ return {
   {
     'williamboman/mason.nvim',
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { 'debugpy', 'black', 'isort', 'mypy', 'ruff', 'python-lsp-server' })
+      vim.list_extend(opts.ensure_installed,
+        { 'debugpy', 'black', 'isort', 'mypy', 'ruff', 'python-lsp-server', 'basedpyright' })
     end,
   },
   {
@@ -76,6 +77,25 @@ return {
           init_options = {
             settings = {},
           },
+        },
+        basedpyright = {
+          settings = {
+            basedpyright = {
+              analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = "openFilesOnly",
+                useLibraryCodeForTypes = true,
+                typeCheckingMode = "standard",
+                autoImportCompletions = true,
+                reportAny = false,
+                reportMissingImports = "error",
+                stubPath = vim.fn.stdpath 'data' .. '/lazy/python-type-stubs/stubs',
+                inlayHints = {
+                  callArgumentNames = true
+                }
+              }
+            }
+          }
         },
         pyright = {
           settings = {
@@ -172,7 +192,7 @@ return {
     lazy = false,
     opts = {
       enable_on_load = true, -- will load your .env file upon loading a buffer
-      verbose = false, -- show error notification if .env file is not found and if .env is loaded
+      verbose = false,       -- show error notification if .env file is not found and if .env is loaded
     },
   },
 }
