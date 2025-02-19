@@ -97,6 +97,8 @@ return {
           }
         },
         pyright = {
+          mason = false,
+          autostart = false,
           settings = {
             python = {
               analysis = {
@@ -111,6 +113,8 @@ return {
           },
         },
         pylsp = {
+          mason = false,
+          autostart = false,
           settings = {
             pylsp = {
               plugins = {
@@ -137,8 +141,8 @@ return {
         },
       },
       setup = {
-        pyright = function(_, _)
-          vim.g.python_host_prog = '/home/igor/.pyenv/shims/python3'
+        basedpyright = function(_, _)
+          vim.g.python_host_prog = '/home/igor/.pyenv/shims/python'
           local lsp_utils = require 'base.lsp.utils'
           lsp_utils.on_attach(function(client, bufnr)
             local map = function(mode, lhs, rhs, desc)
@@ -148,7 +152,7 @@ return {
               vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc, buffer = bufnr, noremap = true })
             end
             -- stylua: ignore
-            if client.name == "pyright" then
+            if client.name == "basedpyright" then
               map("n", "<leader>lo", "<cmd>PyrightOrganizeImports<cr>", "Organize Imports")
               map("n", "<leader>lC", function() require("dap-python").test_class() end, "Debug Class")
               map("n", "<leader>lM", function() require("dap-python").test_method() end, "Debug Method")
