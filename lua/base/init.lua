@@ -105,6 +105,16 @@ return {
     },
   },
   {
+    "sindrets/diffview.nvim",
+    lazy = false,
+    keys = {
+      { "<leader>gdvc", "<cmd>DiffviewClose<cr>",       desc = "Close DiffView" },
+      { "<leader>gdvt", "<cmd>DiffviewToggleFiles<cr>", desc = "DiffView toggle files" },
+      { "<leader>gdvf", "<cmd>DiffviewFocusFiles<cr>",  desc = "DiffView focus files" },
+      { "<leader>gdvf", "<cmd>DiffviewRefresh<cr>",     desc = "DiffView refresh" },
+    },
+  },
+  {
     'folke/persistence.nvim',
     event = 'BufReadPre',
     opts = { options = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help' } },
@@ -124,7 +134,8 @@ return {
     'folke/which-key.nvim',
     event = 'VeryLazy',
     keys = {
-      { '<leader>g', group = '+Git' },
+      { '<leader>g',  group = '+Git' },
+      { '<leader>gd', group = '+DiffView' },
     },
   },
   {
