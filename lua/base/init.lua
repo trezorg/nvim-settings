@@ -134,8 +134,10 @@ return {
     'folke/which-key.nvim',
     event = 'VeryLazy',
     keys = {
-      { '<leader>g',  group = '+Git' },
-      { '<leader>gd', group = '+DiffView' },
+      { '<leader>g',   group = '+Git' },
+      { '<leader>gd',  group = '+Difw' },
+      { '<leader>gdv', group = '+Diffview' },
+      { '<leader>gdg', group = '+Mergetool' },
     },
   },
   {

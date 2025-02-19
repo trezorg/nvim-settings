@@ -74,4 +74,8 @@ keymap('n', '<leader>sl', '<cmd>source<CR>', { silent = true, desc = 'Load sessi
 keymap('n', '<leader>cd', '<cmd>:lua CdAndNotify("lcd")<CR>', { silent = true, desc = 'Cnange directory for window' })
 keymap('n', '<leader>ctd', '<cmd>:lua CdAndNotify("tcd")<CR>', { silent = true, desc = 'Cnange directory for tab' })
 
+keymap('n', "<leader>gdgl", "<cmd>diffget LO<cr>", { silent = true, desc = "Get local" })
+keymap('n', "<leader>gdgb", "<cmd>diffget BA<cr>", { silent = true, desc = "Get base" })
+keymap('n', "<leader>gdgr", "<cmd>diffget RE<cr>", { silent = true, desc = "Get remote" })
+
 keymap({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
