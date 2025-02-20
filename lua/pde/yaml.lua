@@ -66,7 +66,7 @@ return {
               single_file_support = true,
               schemas = {
                 ["https://json.schemastore.org/github-workflow.json"] = { "/.github/workflows/*" },
-                ["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.1-standalone-strict/all.json"] = { "/*.k8s.yaml", "k8s/*.yaml" },
+                ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.1-standalone-strict/all.json"] = { "/*.k8s.yaml", "k8s/*.yaml" },
                 ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = { "ci/*.yml", ".gitlab-ci.yml" },
               },
             },
