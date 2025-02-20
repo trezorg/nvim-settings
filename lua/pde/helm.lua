@@ -3,17 +3,24 @@ if not require('config').pde.helm then
 end
 
 local function set_yaml_for_helm_files()
-  vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead', 'BufWrite' }, {
     pattern = {
       '*/templates/*.yaml',
       '*/templates/*.yml',
       '*/templates/*.tpl',
       '*.gotmpl',
-      'helmfile*.yaml'
+      'helmfile*.yaml',
     },
     group = vim.api.nvim_create_augroup("set_filetype_of_helm", {}),
     callback = function(ev)
       vim.opt_local.filetype = 'helm'
+      vim.cmd([[ LspRestart ]])
+      vim.diagnostic.reset()
+      local client = vim.lsp.get_clients({ bufnr = ev.buf, name = "yamlls" })[1]
+      if client then
+        local ns = vim.lsp.diagnostic.get_namespace(client.id)
+        vim.diagnostic.enable(false, { ns_id = ns })
+      end
     end
   })
 end
@@ -25,7 +32,10 @@ return {
       vim.list_extend(opts.ensure_installed, { 'helm-ls' })
     end,
   },
-  { 'towolf/vim-helm', lazy = false },
+  {
+    'towolf/vim-helm',
+    ft = 'helm'
+  },
   {
     'neovim/nvim-lspconfig',
     opts = {
@@ -50,7 +60,7 @@ return {
             }
           end
 
-          set_yaml_for_helm_files()
+          -- set_yaml_for_helm_files()
 
           lspconfig.helm_ls.setup {
             filetypes = { "helm", "helmfile" },
