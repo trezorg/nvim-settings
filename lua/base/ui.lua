@@ -1,13 +1,18 @@
 return {
   {
-    'nvim-tree/nvim-web-devicons',
-    dependencies = { 'DaikyXendo/nvim-material-icon' },
-    config = function()
-      require('nvim-web-devicons').setup {
-        -- override = require('nvim-material-icon').get_icons(),
-      }
-    end,
-  },
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+    }
+  }, {
+  'nvim-tree/nvim-web-devicons',
+  dependencies = { 'DaikyXendo/nvim-material-icon' },
+  config = function()
+    require('nvim-web-devicons').setup {
+      -- override = require('nvim-material-icon').get_icons(),
+    }
+  end,
+},
   {
     'Mofiqul/vscode.nvim',
     lazy = false,
