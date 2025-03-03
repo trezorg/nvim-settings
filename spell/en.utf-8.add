@@ -125,3 +125,17 @@ TracerProvider
 false
 nolint
 nvim
+hmac
+oauth
+verifier
+boli
+unmarshal
+upsert
+changeset
+PEM
+RSA
+RPC
+timestamp
+uri
+transactional
+gosec
