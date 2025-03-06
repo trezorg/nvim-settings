@@ -143,6 +143,7 @@ return {
     'nvim-neotest/neotest',
     dependencies = {
       'nvim-neotest/neotest-go',
+      "nvim-contrib/nvim-ginkgo",
     },
     opts = function(_, opts)
       local neotest_ns = vim.api.nvim_create_namespace("neotest")
@@ -162,7 +163,8 @@ return {
             test_table = true,
           },
           args = { "-count=1", "-timeout=60s" }
-        })
+        }),
+        require("nvim-ginkgo")
       })
     end,
   },
