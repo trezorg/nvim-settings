@@ -21,7 +21,7 @@ return {
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "codelldb" })
+      vim.list_extend(opts.ensure_installed, { "codelldb", "clangd" })
     end,
   },
   {
@@ -29,7 +29,10 @@ return {
     dependencies = { "p00f/clangd_extensions.nvim" },
     opts = {
       servers = {
-        clangd = {},
+        clangd = {
+          mason = false,
+          autostart = false,
+        },
       },
       setup = {
         clangd = function(_, _)

@@ -41,7 +41,7 @@ local function lsp_init()
   -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, config.float)
 end
 
-function dump(o)
+local function dump(o)
   if type(o) == 'table' then
     local s = '{ '
     for k, v in pairs(o) do
@@ -65,6 +65,7 @@ function M.setup(_, opts)
   lsp_init() -- diagnostics, handlers
 
   local servers = opts.servers
+  dump(servers)
   local capabilities = lsp_utils.capabilities()
 
   local function setup(server)
@@ -83,7 +84,7 @@ function M.setup(_, opts)
     require('lspconfig')[server].setup(server_opts)
   end
 
-  -- get all the servers that are available thourgh mason-lspconfig
+  -- get all the servers that are available thought mason-lspconfig
   local have_mason, mlsp = pcall(require, 'mason-lspconfig')
   local all_mslp_servers = {}
   if have_mason then
