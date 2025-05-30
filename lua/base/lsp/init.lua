@@ -10,37 +10,37 @@ return {
     'onsails/lspkind-nvim',
     lazy = false,
     init = function()
-      require('lspkind').init({
+      require('lspkind').init {
         mode = 'symbol_text',
         preset = 'codicons',
         symbol_map = {
-          Text = "󰉿",
-          Method = "󰆧",
-          Function = "󰊕",
-          Constructor = "",
-          Field = "󰜢",
-          Variable = "󰀫",
-          Class = "󰠱",
-          Interface = "",
-          Module = "",
-          Property = "󰜢",
-          Unit = "󰑭",
-          Value = "󰎠",
-          Enum = "",
-          Keyword = "󰌋",
-          Snippet = "",
-          Color = "󰏘",
-          File = "󰈙",
-          Reference = "󰈇",
-          Folder = "󰉋",
-          EnumMember = "",
-          Constant = "󰏿",
-          Struct = "󰙅",
-          Event = "",
-          Operator = "󰆕",
-          TypeParameter = "",
+          Text = '󰉿',
+          Method = '󰆧',
+          Function = '󰊕',
+          Constructor = '',
+          Field = '󰜢',
+          Variable = '󰀫',
+          Class = '󰠱',
+          Interface = '',
+          Module = '',
+          Property = '󰜢',
+          Unit = '󰑭',
+          Value = '󰎠',
+          Enum = '',
+          Keyword = '󰌋',
+          Snippet = '',
+          Color = '󰏘',
+          File = '󰈙',
+          Reference = '󰈇',
+          Folder = '󰉋',
+          EnumMember = '',
+          Constant = '󰏿',
+          Struct = '󰙅',
+          Event = '',
+          Operator = '󰆕',
+          TypeParameter = '',
         },
-      })
+      }
     end,
   },
   {
@@ -60,8 +60,24 @@ return {
     },
     config = function(plugin, opts)
       require('base.lsp.servers').setup(plugin, opts)
-      vim.lsp.set_log_level("info")
+      vim.lsp.set_log_level 'error'
     end,
+  },
+  {
+    'mason-org/mason-lspconfig.nvim',
+    opts = {
+      automatic_enable = {
+        exclude = {
+          'pyright',
+          'pylsp',
+        },
+      },
+      -- ensure_installed = { 'lua_ls', 'rust_analyzer' },
+    },
+    dependencies = {
+      { 'mason-org/mason.nvim', opts = {} },
+      'neovim/nvim-lspconfig',
+    },
   },
   {
     'williamboman/mason.nvim',
@@ -71,7 +87,7 @@ return {
       ensure_installed = {
         'shfmt',
       },
-      log_level = vim.log.levels.DEBUG
+      log_level = vim.log.levels.DEBUG,
     },
     config = function(_, opts)
       require('mason').setup(opts)

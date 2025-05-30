@@ -54,7 +54,7 @@ return {
       require('venv-selector').setup {
         name = { 'venv', '.venv' },
         dap_enabled = true,
-        poetry_path = '~/.cache/pypoetry/virtualenvs'
+        poetry_path = '~/.cache/pypoetry/virtualenvs',
       }
     end,
   },
@@ -65,8 +65,7 @@ return {
   {
     'williamboman/mason.nvim',
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed,
-        { 'debugpy', 'black', 'isort', 'mypy', 'ruff', 'python-lsp-server', 'basedpyright' })
+      vim.list_extend(opts.ensure_installed, { 'debugpy', 'black', 'isort', 'mypy', 'ruff', 'python-lsp-server', 'basedpyright' })
     end,
   },
   {
@@ -83,18 +82,18 @@ return {
             basedpyright = {
               analysis = {
                 autoSearchPaths = true,
-                diagnosticMode = "openFilesOnly",
+                diagnosticMode = 'openFilesOnly',
                 useLibraryCodeForTypes = true,
-                typeCheckingMode = "standard",
+                typeCheckingMode = 'standard',
                 autoImportCompletions = true,
-                reportMissingImports = "error",
+                reportMissingImports = 'error',
                 stubPath = vim.fn.stdpath 'data' .. '/lazy/python-type-stubs/stubs',
                 inlayHints = {
-                  callArgumentNames = true
-                }
-              }
-            }
-          }
+                  callArgumentNames = true,
+                },
+              },
+            },
+          },
         },
         pyright = {
           mason = false,
@@ -183,7 +182,7 @@ return {
           dap = { justMyCode = false },
           runner = 'pytest',
           pytest_discover_instances = true,
-          args = { "-sv" },
+          args = { '-sv' },
         },
       })
     end,
@@ -197,7 +196,7 @@ return {
     lazy = false,
     opts = {
       enable_on_load = true, -- will load your .env file upon loading a buffer
-      verbose = false,       -- show error notification if .env file is not found and if .env is loaded
+      verbose = false, -- show error notification if .env file is not found and if .env is loaded
     },
   },
 }
