@@ -9,31 +9,31 @@ return {
       vim.list_extend(opts.ensure_installed, { 'python' })
     end,
   },
-  -- {
-  --   'nvimtools/none-ls.nvim',
-  --   opts = function(_, opts)
-  --     local nls = require 'null-ls'
-  --     opts.sources = {
-  --       nls.builtins.formatting.black,
-  --       nls.builtins.formatting.isort,
-  --       nls.builtins.diagnostics.ruff,
-  --       nls.builtins.diagnostics.mypy,
-  --     }
-  --     opts.on_attach = function(client, bufnr)
-  --       local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-  --       if client.supports_method 'textDocument/formatting' then
-  --         vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
-  --         vim.api.nvim_create_autocmd('BufWritePre', {
-  --           group = augroup,
-  --           buffer = bufnr,
-  --           callback = function()
-  --             vim.lsp.buf.format { bufnr = bufnr }
-  --           end,
-  --         })
-  --       end
-  --     end
-  --   end,
-  -- },
+  {
+    'nvimtools/none-ls.nvim',
+    opts = function(_, opts)
+      local nls = require 'null-ls'
+      opts.sources = {
+        nls.builtins.formatting.black,
+        nls.builtins.formatting.isort,
+        -- nls.builtins.diagnostics.ruff,
+        nls.builtins.diagnostics.mypy,
+      }
+      opts.on_attach = function(client, bufnr)
+        local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+        if client.supports_method 'textDocument/formatting' then
+          vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
+          vim.api.nvim_create_autocmd('BufWritePre', {
+            group = augroup,
+            buffer = bufnr,
+            callback = function()
+              vim.lsp.buf.format { bufnr = bufnr }
+            end,
+          })
+        end
+      end
+    end,
+  },
   {
     'linux-cultist/venv-selector.nvim',
     branch = 'regexp',
