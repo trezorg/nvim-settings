@@ -17,6 +17,7 @@ return {
     rust = true,
     terraform = true,
     typescript = true,
+    tilt = true,
     vuejs = false,
     tailwind = false,
     svelte = false,
