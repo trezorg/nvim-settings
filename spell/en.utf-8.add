@@ -170,3 +170,4 @@ healthcheck
 unexported
 Postgre
 linters
+stdout
