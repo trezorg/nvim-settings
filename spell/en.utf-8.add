@@ -171,3 +171,11 @@ unexported
 Postgre
 linters
 stdout
+healthz
+bump
+RGB
+pre
+Resize
+vectorized
+SIGTERM
+SIGINT

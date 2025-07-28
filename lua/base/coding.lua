@@ -218,6 +218,7 @@ return {
       'nvim-neotest/neotest-vim-test',
       'vim-test/vim-test',
       'stevearc/overseer.nvim',
+      "nvim-contrib/nvim-ginkgo",
     },
     keys = {
       { '<leader>td', "<cmd>w|lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>", desc = 'Debug File' },
