@@ -179,3 +179,8 @@ Resize
 vectorized
 SIGTERM
 SIGINT
+argparse
+golang
+dataclasses
+pydantic
+nullable
