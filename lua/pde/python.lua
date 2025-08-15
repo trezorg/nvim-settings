@@ -17,7 +17,9 @@ return {
         nls.builtins.formatting.black,
         nls.builtins.formatting.isort,
         -- nls.builtins.diagnostics.ruff,
-        nls.builtins.diagnostics.mypy,
+        nls.builtins.diagnostics.mypy.with({
+          cwd = function(_) return vim.fn.getcwd() end,
+        }),
       }
       opts.on_attach = function(client, bufnr)
         local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
@@ -65,7 +67,8 @@ return {
   {
     'williamboman/mason.nvim',
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { 'debugpy', 'black', 'isort', 'mypy', 'ruff', 'python-lsp-server', 'basedpyright' })
+      vim.list_extend(opts.ensure_installed,
+        { 'debugpy', 'black', 'isort', 'mypy', 'ruff', 'python-lsp-server', 'basedpyright' })
     end,
   },
   {
@@ -196,7 +199,7 @@ return {
     lazy = false,
     opts = {
       enable_on_load = true, -- will load your .env file upon loading a buffer
-      verbose = false, -- show error notification if .env file is not found and if .env is loaded
+      verbose = false,       -- show error notification if .env file is not found and if .env is loaded
     },
   },
 }
