@@ -18,7 +18,12 @@ return {
         nls.builtins.formatting.isort,
         -- nls.builtins.diagnostics.ruff,
         nls.builtins.diagnostics.mypy.with({
+          -- extra_args = { "--config-file", "pyproject.toml" },
+          command = "mypy",
           cwd = function(_) return vim.fn.getcwd() end,
+          -- cwd = function(params)
+          --   return vim.fs.dirname(vim.fs.find("pyproject.toml", { upward = true, path = params.root })[1])
+          -- end,
         }),
       }
       opts.on_attach = function(client, bufnr)

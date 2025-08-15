@@ -56,15 +56,15 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- new tab change directory
-vim.api.nvim_create_autocmd('TabNewEntered', {
-  pattern = '*',
-  callback = function()
-    local path = vim.fn.expand '%:p'
-    if vim.fn.filereadable(path) then
-      local dirname = vim.fn.fnamemodify(path, ':h')
-      local ext = vim.fn.fnamemodify(path, ':e')
-      vim.cmd('tcd ' .. dirname)
-      vim.notify(dirname)
-    end
-  end,
-})
+-- vim.api.nvim_create_autocmd('TabNewEntered', {
+--   pattern = '*',
+--   callback = function()
+--     local path = vim.fn.expand '%:p'
+--     if vim.fn.filereadable(path) then
+--       local dirname = vim.fn.fnamemodify(path, ':h')
+--       local ext = vim.fn.fnamemodify(path, ':e')
+--       vim.cmd('tcd ' .. dirname)
+--       vim.notify(dirname)
+--     end
+--   end,
+-- })
