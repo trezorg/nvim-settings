@@ -184,3 +184,7 @@ golang
 dataclasses
 pydantic
 nullable
+pytest
+mypy
+linter
+pyproject
