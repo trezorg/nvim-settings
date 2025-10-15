@@ -188,3 +188,11 @@ pytest
 mypy
 linter
 pyproject
+Django
+embeddings
+unpickling
+numpy
+Args
+len
+recursive
+CLI

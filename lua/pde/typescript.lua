@@ -1,43 +1,42 @@
-if not require("config").pde.typescript then
+if not require('config').pde.typescript then
   return {}
 end
 
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
+    'nvim-treesitter/nvim-treesitter',
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "javascript", "typescript", "tsx" })
+      vim.list_extend(opts.ensure_installed, { 'javascript', 'typescript', 'tsx' })
     end,
   },
   {
-    "williamboman/mason.nvim",
+    'williamboman/mason.nvim',
     opts = function(_, opts)
-      table.insert(opts.ensure_installed, "typescript-language-server")
+      table.insert(opts.ensure_installed, 'typescript-language-server')
     end,
   },
   {
-    "neovim/nvim-lspconfig",
-    dependencies = { "jose-elias-alvarez/typescript.nvim" },
+    'neovim/nvim-lspconfig',
+    dependencies = { 'jose-elias-alvarez/typescript.nvim' },
     opts = {
       -- make sure mason installs the server
       servers = {
         ---Typescript
         ts_ls = {
-          settings = {
-          },
+          settings = {},
         },
         -- ESLint
         eslint = {
           settings = {
             -- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
-            workingDirectory = { mode = "auto" },
+            workingDirectory = { mode = 'auto' },
           },
         },
       },
       setup = {
         tl_ls = function(_, opts)
-          require("base.lsp.utils").on_attach(function(client, bufnr)
-            if client.name == "ts_ls" then
+          require('base.lsp.utils').on_attach(function(client, bufnr)
+            if client.name == 'ts_ls' then
               -- stylua: ignore
               vim.keymap.set("n", "<leader>lo", "<cmd>TypescriptOrganizeImports<CR>",
                 { buffer = bufnr, desc = "Organize Imports" })
@@ -45,17 +44,17 @@ return {
               vim.keymap.set("n", "<leader>lR", "<cmd>TypescriptRenameFile<CR>", { desc = "Rename File", buffer = bufnr })
             end
           end)
-          require("typescript").setup { server = opts }
+          require('typescript').setup { server = opts }
           return true
         end,
         eslint = function()
-          vim.api.nvim_create_autocmd("BufWritePre", {
+          vim.api.nvim_create_autocmd('BufWritePre', {
             callback = function(event)
-              local client = vim.lsp.get_clients({ bufnr = event.buf, name = "eslint" })[1]
+              local client = vim.lsp.get_clients({ bufnr = event.buf, name = 'eslint' })[1]
               if client then
                 local diag = vim.diagnostic.get(event.buf, { namespace = vim.lsp.diagnostic.get_namespace(client.id) })
                 if #diag > 0 then
-                  vim.cmd "EslintFixAll"
+                  vim.cmd 'EslintFixAll'
                 end
               end
             end,
@@ -65,111 +64,117 @@ return {
     },
   },
   {
-    "nvimtools/none-ls.nvim",
+    'nvimtools/none-ls.nvim',
     dependencies = {
-      "nvimtools/none-ls-extras.nvim"
+      'nvimtools/none-ls-extras.nvim',
     },
     opts = function(_, opts)
-      table.insert(opts.sources, require "typescript.extensions.null-ls.code-actions")
-      table.insert(opts.sources, require("none-ls.diagnostics.eslint"))
+      table.insert(opts.sources, require 'typescript.extensions.null-ls.code-actions')
+      table.insert(opts.sources, require 'none-ls.diagnostics.eslint')
     end,
   },
   {
-    "mfussenegger/nvim-dap",
+    'mfussenegger/nvim-dap',
     dependencies = {
-      { "mxsdev/nvim-dap-vscode-js" },
+      { 'mxsdev/nvim-dap-vscode-js' },
       {
-        "microsoft/vscode-js-debug",
-        build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
+        'microsoft/vscode-js-debug',
+        build = 'npm ci --ignore-scripts && npx gulp vsDebugServerBundle && mv dist out',
+        -- build = 'PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=1 npm ci && npm run compile',
+        -- build 'npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out',
       },
     },
     opts = {
       setup = {
         vscode_js_debug = function()
           local function get_js_debug()
-            local path = vim.fn.stdpath "data"
-            return path .. "/lazy/vscode-js-debug"
+            local path = vim.fn.stdpath 'data'
+            return path .. '/lazy/vscode-js-debug'
           end
 
-          require("dap-vscode-js").setup {
-            node_path = "node",
+          require('dap-vscode-js').setup {
+            node_path = 'node',
             debugger_path = get_js_debug(),
-            adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
+            adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
           }
 
-          for _, language in ipairs { "typescript", "javascript" } do
-            require("dap").configurations[language] = {
+          for _, language in ipairs { 'typescript', 'javascript' } do
+            require('dap').configurations[language] = {
               {
-                type = "pwa-node",
-                request = "launch",
-                name = "Launch file",
-                program = "${file}",
-                cwd = "${workspaceFolder}",
+                type = 'pwa-node',
+                request = 'launch',
+                name = 'Launch file',
+                program = '${file}',
+                cwd = '${workspaceFolder}',
               },
               {
-                type = "pwa-node",
-                request = "attach",
-                name = "Attach",
-                processId = require("dap.utils").pick_process,
-                cwd = "${workspaceFolder}",
+                type = 'pwa-node',
+                request = 'attach',
+                name = 'Attach',
+                processId = require('dap.utils').pick_process,
+                cwd = '${workspaceFolder}',
               },
               {
-                type = "pwa-node",
-                request = "launch",
-                name = "Debug Jest Tests",
+                type = 'pwa-node',
+                request = 'launch',
+                name = 'Debug Jest Tests',
                 -- trace = true, -- include debugger info
-                runtimeExecutable = "node",
+                runtimeExecutable = 'node',
                 runtimeArgs = {
-                  "./node_modules/jest/bin/jest.js",
-                  "--runInBand",
+                  './node_modules/jest/bin/jest.js',
+                  '--runInBand',
                 },
-                rootPath = "${workspaceFolder}",
-                cwd = "${workspaceFolder}",
-                console = "integratedTerminal",
-                internalConsoleOptions = "neverOpen",
+                rootPath = '${workspaceFolder}',
+                cwd = '${workspaceFolder}',
+                console = 'integratedTerminal',
+                internalConsoleOptions = 'neverOpen',
               },
               {
-                type = "pwa-chrome",
-                name = "Attach - Remote Debugging",
-                request = "attach",
-                program = "${file}",
+                type = 'pwa-chrome',
+                name = 'Attach - Remote Debugging',
+                request = 'attach',
+                program = '${file}',
                 cwd = vim.fn.getcwd(),
                 sourceMaps = true,
-                protocol = "inspector",
+                protocol = 'inspector',
                 port = 9222, -- Start Chrome google-chrome --remote-debugging-port=9222
-                webRoot = "${workspaceFolder}",
+                webRoot = '${workspaceFolder}',
+                runtimeExecutable = '/usr/bin/google-chrome',
               },
               {
-                type = "pwa-chrome",
-                name = "Launch Chrome",
-                request = "launch",
-                url = "http://localhost:5173", -- This is for Vite. Change it to the framework you use
-                webRoot = "${workspaceFolder}",
-                userDataDir = "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir",
+                type = 'pwa-chrome',
+                name = 'Launch Chrome',
+                request = 'launch',
+                url = 'http://localhost:5173', -- This is for Vite. Change it to the framework you use
+                webRoot = '${workspaceFolder}',
+                userDataDir = '${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir',
+                runtimeExecutable = '/usr/bin/google-chrome',
               },
             }
           end
 
-          for _, language in ipairs { "typescriptreact", "javascriptreact" } do
-            require("dap").configurations[language] = {
+          for _, language in ipairs { 'typescriptreact', 'javascriptreact' } do
+            require('dap').configurations[language] = {
               {
-                type = "pwa-chrome",
-                name = "Attach - Remote Debugging",
-                request = "attach",
-                program = "${file}",
+                type = 'pwa-chrome',
+                name = 'Attach - Remote Debugging',
+                request = 'attach',
+                program = '${file}',
                 cwd = vim.fn.getcwd(),
                 sourceMaps = true,
-                protocol = "inspector",
+                protocol = 'inspector',
                 port = 9222, -- Start Chrome google-chrome --remote-debugging-port=9222
-                webRoot = "${workspaceFolder}",
+                webRoot = '${workspaceFolder}',
+                runtimeExecutable = '/usr/bin/google-chrome',
               },
               {
-                type = "pwa-chrome",
-                name = "Launch Chrome",
-                request = "launch",
-                url = "http://localhost:5173", -- This is for Vite. Change it to the framework you use
-                webRoot = "${workspaceFolder}",
-                userDataDir = "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir",
+                type = 'pwa-chrome',
+                name = 'Launch Chrome',
+                request = 'launch',
+                url = 'http://localhost:5173', -- This is for Vite. Change it to the framework you use
+                webRoot = '${workspaceFolder}',
+                userDataDir = '${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir',
+                runtimeExecutable = '/usr/bin/google-chrome',
               },
             }
           end
@@ -178,17 +183,17 @@ return {
     },
   },
   {
-    "nvim-neotest/neotest",
+    'nvim-neotest/neotest',
     dependencies = {
-      "nvim-neotest/neotest-jest",
-      "marilari88/neotest-vitest",
-      "thenbe/neotest-playwright",
+      'nvim-neotest/neotest-jest',
+      'marilari88/neotest-vitest',
+      'thenbe/neotest-playwright',
     },
     opts = function(_, opts)
       vim.list_extend(opts.adapters, {
-        require "neotest-jest",
-        require "neotest-vitest",
-        require("neotest-playwright").adapter {
+        require 'neotest-jest',
+        require 'neotest-vitest',
+        require('neotest-playwright').adapter {
           options = {
             persist_project_selection = true,
             enable_dynamic_test_discovery = true,
