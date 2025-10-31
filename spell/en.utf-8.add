@@ -196,3 +196,4 @@ Args
 len
 recursive
 CLI
+FAISS

@@ -55,10 +55,10 @@ return {
     'folke/which-key.nvim',
     event = 'VeryLazy',
     keys = {
-      { "<leader>D",  group = "+Database" },
-      { '<leader>Du', '<Cmd>DBUIToggle<Cr>',        desc = 'Toggle UI' },
-      { "<leader>Df", "<Cmd>DBUIFindBuffer<Cr>",    desc = "Find buffer" },
-      { '<leader>Dr', '<Cmd>DBUIRenameBuffer<Cr>',  desc = 'Rename buffer' },
+      { '<leader>D', group = '+Database' },
+      { '<leader>Du', '<Cmd>DBUIToggle<Cr>', desc = 'Toggle UI' },
+      { '<leader>Df', '<Cmd>DBUIFindBuffer<Cr>', desc = 'Find buffer' },
+      { '<leader>Dr', '<Cmd>DBUIRenameBuffer<Cr>', desc = 'Rename buffer' },
       { '<leader>Dq', '<Cmd>DBUILastQueryInfo<Cr>', desc = 'Last query info' },
     },
   },
@@ -70,10 +70,9 @@ return {
           cmd = { 'sql-language-server', 'up', '--method', 'stdio', '-d' },
           -- filetypes = { 'sql', 'mysql', 'psql' },
           filetypes = { 'psql' },
-          root_dir =
-              function()
-                return vim.loop.cwd()
-              end,
+          root_dir = function()
+            return vim.loop.cwd()
+          end,
           settings = {
             sqlLanguageServer = {
               lint = {
@@ -84,23 +83,23 @@ return {
                   ['reserved-word-case'] = { 'error', 'lower' },
                   ['space-surrounding-operators'] = 'error',
                   ['where-clause-new-line'] = 'error',
-                  ['align-where-clause-to-the-first'] = 'error'
-                }
-              }
-            }
-          }
+                  ['align-where-clause-to-the-first'] = 'error',
+                },
+              },
+            },
+          },
         },
         postgres_lsp = {
           name = 'postgres_lsp',
-          cmd = { 'pglsp' },
+          cmd = { 'postgres-language-server', 'lsp-proxy' },
           filetypes = { 'sql' },
           single_file_support = true,
-          root_dir =
-              function()
-                return vim.loop.cwd()
-              end
-        }
-      }
-    }
-  }
+          root_markers = { 'postgres-language-server.jsonc' },
+          root_dir = function()
+            return vim.loop.cwd()
+          end,
+        },
+      },
+    },
+  },
 }
