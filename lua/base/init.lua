@@ -1,15 +1,15 @@
 return {
-  { 'tpope/vim-sleuth',    event = 'VeryLazy' },
-  { 'tpope/vim-repeat',    event = 'VeryLazy' },
+  { 'tpope/vim-sleuth', event = 'VeryLazy' },
+  { 'tpope/vim-repeat', event = 'VeryLazy' },
   { 'tpope/vim-rhubarb' },
   { 'tpope/vim-commentary' },
   { 'tpope/vim-unimpaired' },
   { 'tpope/vim-surround' },
   { 'tpope/vim-repeat' },
-  { 'tpope/vim-abolish',   event = 'VeryLazy' },
+  { 'tpope/vim-abolish', event = 'VeryLazy' },
   { 'mitsuhiko/vim-jinja', event = 'VeryLazy' },
   {
-    "https://github.com/dstein64/nvim-scrollview",
+    'https://github.com/dstein64/nvim-scrollview',
     event = 'VeryLazy',
     lazy = false,
     config = true,
@@ -19,19 +19,8 @@ return {
       base = 'left',
       column = 1,
       signs_on_startup = { 'all' },
-      diagnostics_severities = { vim.diagnostic.severity.WARN }
-    }
-  },
-  {
-    "iamcco/markdown-preview.nvim",
-    event = 'VeryLazy',
-    lazy = false,
-    config = function()
-      vim.fn["mkdp#util#install"]()
-      vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreview<CR>', { silent = true, desc = 'MarkdownPreview' })
-      vim.keymap.set('n', '<leader>ms', '<cmd>MarkdownPreviewStop<CR>',
-        { silent = true, desc = 'MarkdownPreviewStop' })
-    end,
+      diagnostics_severities = { vim.diagnostic.severity.WARN },
+    },
   },
   -- {
   --   'echasnovski/mini.nvim',
@@ -48,16 +37,16 @@ return {
   --   end,
   -- },
   {
-    "nvim-tree/nvim-tree.lua",
-    version = "*",
+    'nvim-tree/nvim-tree.lua',
+    version = '*',
     lazy = false,
     dependencies = {
-      "nvim-tree/nvim-web-devicons"
+      'nvim-tree/nvim-web-devicons',
     },
     config = function() -- opts
-      require('nvim-tree').setup({
+      require('nvim-tree').setup {
         sort = {
-          sorter = "case_sensitive",
+          sorter = 'case_sensitive',
         },
         view = {
           width = 30,
@@ -67,8 +56,8 @@ return {
         },
         filters = {
           dotfiles = false,
-        }
-      })
+        },
+      }
       vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<cr>', { silent = true, desc = 'NeoVim Tree' })
     end,
   },
@@ -78,14 +67,14 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = true,
     opts = {
-      show_index = true,           -- show tab index
-      show_modify = true,          -- show buffer modification indicator
-      show_icon = true,            -- show file extension icon
+      show_index = true, -- show tab index
+      show_modify = true, -- show buffer modification indicator
+      show_icon = true, -- show file extension icon
       -- fnamemodify = ':p:.',        -- file name modifier
-      fnamemodify = ':~:.',        -- file name modifier
-      modify_indicator = '[+]',    -- modify indicator
-      no_name = 'No name',         -- no name buffer name
-      brackets = { '[', ']' },     -- file name brackets surrounding
+      fnamemodify = ':~:.', -- file name modifier
+      modify_indicator = '[+]', -- modify indicator
+      no_name = 'No name', -- no name buffer name
+      brackets = { '[', ']' }, -- file name brackets surrounding
       inactive_tab_max_length = 0, -- max length of inactive tab titles, 0 to ignore
     },
   },
@@ -106,13 +95,13 @@ return {
     },
   },
   {
-    "sindrets/diffview.nvim",
+    'sindrets/diffview.nvim',
     lazy = false,
     keys = {
-      { "<leader>gdvc", "<cmd>DiffviewClose<cr>",       desc = "Close DiffView" },
-      { "<leader>gdvt", "<cmd>DiffviewToggleFiles<cr>", desc = "DiffView toggle files" },
-      { "<leader>gdvf", "<cmd>DiffviewFocusFiles<cr>",  desc = "DiffView focus files" },
-      { "<leader>gdvf", "<cmd>DiffviewRefresh<cr>",     desc = "DiffView refresh" },
+      { '<leader>gdvc', '<cmd>DiffviewClose<cr>', desc = 'Close DiffView' },
+      { '<leader>gdvt', '<cmd>DiffviewToggleFiles<cr>', desc = 'DiffView toggle files' },
+      { '<leader>gdvf', '<cmd>DiffviewFocusFiles<cr>', desc = 'DiffView focus files' },
+      { '<leader>gdvf', '<cmd>DiffviewRefresh<cr>', desc = 'DiffView refresh' },
     },
   },
   {
@@ -135,8 +124,8 @@ return {
     'folke/which-key.nvim',
     event = 'VeryLazy',
     keys = {
-      { '<leader>g',   group = '+Git' },
-      { '<leader>gd',  group = '+Difw' },
+      { '<leader>g', group = '+Git' },
+      { '<leader>gd', group = '+Difw' },
       { '<leader>gdv', group = '+Diffview' },
       { '<leader>gdg', group = '+Mergetool' },
     },
@@ -148,32 +137,30 @@ return {
       enabled = true,
       execution_message = {
         message = function() -- message to print on save
-          return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
+          return ('AutoSave: saved at ' .. vim.fn.strftime '%H:%M:%S')
         end,
-        dim = 0.18,              -- dim the color of `message`
+        dim = 0.18, -- dim the color of `message`
         cleaning_interval = 100, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
       },
-      trigger_events = { "InsertLeave", "TextChanged" },
+      trigger_events = { 'InsertLeave', 'TextChanged' },
       -- trigger_events = { "InsertLeave" },
       condition = function(buf)
         local fn = vim.fn
-        local utils = require("auto-save.utils.data")
-        if
-            fn.getbufvar(buf, "&modifiable") == 1 and
-            utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
+        local utils = require 'auto-save.utils.data'
+        if fn.getbufvar(buf, '&modifiable') == 1 and utils.not_in(fn.getbufvar(buf, '&filetype'), {}) then
           return true -- met condition(s), can save
         end
-        return false  -- can't save
+        return false -- can't save
       end,
       debounce_delay = 5000,
     },
   },
   {
     'akinsho/toggleterm.nvim',
-    version = "*",
+    version = '*',
     event = 'VeryLazy',
     config = function()
-      require("toggleterm").setup({
+      require('toggleterm').setup {
         size = 20,
         open_mapping = [[<c-\>]],
         hide_numbers = true,
@@ -183,18 +170,18 @@ return {
         start_in_insert = true,
         insert_mappings = true,
         persist_size = true,
-        direction = "float",
+        direction = 'float',
         close_on_exit = true,
         shell = vim.o.shell,
         float_opts = {
-          border = "curved",
+          border = 'curved',
           winblend = 0,
           highlights = {
-            border = "Normal",
-            background = "Normal",
+            border = 'Normal',
+            background = 'Normal',
           },
         },
-      })
+      }
       function _G.set_terminal_keymaps()
         local opts = { noremap = true }
         vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
@@ -205,15 +192,12 @@ return {
         vim.api.nvim_buf_set_keymap(0, 't', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
       end
 
-      vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+      vim.cmd 'autocmd! TermOpen term://* lua set_terminal_keymaps()'
       local keymap = vim.keymap.set
       keymap('n', '<leader>ftt', '<cmd>ToggleTerm direction=tab<cr>', { silent = true, desc = 'Open terminal tab mode' })
-      keymap('n', '<leader>ftf', '<cmd>ToggleTerm direction=float<cr>',
-        { silent = true, desc = 'Open terminal float mode' })
-      keymap('n', '<leader>fth', '<cmd>ToggleTerm size=30 direction=horizontal<cr>',
-        { silent = true, desc = 'Open terminal horizontal mode' })
-      keymap('n', '<leader>ftv', '<cmd>ToggleTerm size=30 direction=vertical<cr>',
-        { silent = true, desc = 'Open terminal vertical mode' })
+      keymap('n', '<leader>ftf', '<cmd>ToggleTerm direction=float<cr>', { silent = true, desc = 'Open terminal float mode' })
+      keymap('n', '<leader>fth', '<cmd>ToggleTerm size=30 direction=horizontal<cr>', { silent = true, desc = 'Open terminal horizontal mode' })
+      keymap('n', '<leader>ftv', '<cmd>ToggleTerm size=30 direction=vertical<cr>', { silent = true, desc = 'Open terminal vertical mode' })
     end,
   },
 }

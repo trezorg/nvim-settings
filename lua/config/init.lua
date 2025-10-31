@@ -12,6 +12,7 @@ return {
     json = true,
     yaml = true,
     lua = true,
+    markdown = true,
     protobuf = true,
     python = true,
     rust = true,
