@@ -4,9 +4,9 @@ end
 
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
+    'nvim-treesitter/nvim-treesitter',
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "proto" })
+      vim.list_extend(opts.ensure_installed, { 'proto' })
     end,
   },
   -- {
@@ -19,8 +19,7 @@ return {
     'neovim/nvim-lspconfig',
     opts = {
       servers = {
-        buf_ls = {
-        },
+        buf_ls = {},
       },
       setup = {
         buf_ls = function(_, _)
@@ -29,10 +28,10 @@ return {
 
           lspconfig.buf_ls.setup {
             filetypes = { 'proto' },
-            root_dir = util.root_pattern("buf.work.yaml", ".git"),
+            root_dir = util.root_pattern('buf.work.yaml', '.git', 'easyp.yaml'),
           }
         end,
       },
     },
-  }
+  },
 }
