@@ -57,6 +57,11 @@ return {
         filters = {
           dotfiles = false,
         },
+        git = {
+          enable = true,
+          ignore = false,
+          timeout = 500,
+        },
       }
       vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<cr>', { silent = true, desc = 'NeoVim Tree' })
     end,
