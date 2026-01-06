@@ -12,7 +12,7 @@ return {
   {
     'williamboman/mason.nvim',
     opts = function(_, opts)
-      table.insert(opts.ensure_installed, 'typescript-language-server')
+      vim.list_extend(opts.ensure_installed, { 'typescript-language-server', 'eslint-lsp' })
     end,
   },
   {

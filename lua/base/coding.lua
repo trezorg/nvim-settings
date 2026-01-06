@@ -52,8 +52,7 @@ return {
       }
       local has_words_before = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and
-            vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
       end
 
       return {
@@ -124,9 +123,9 @@ return {
         },
         sources = cmp.config.sources {
           { name = 'nvim_lsp', group_index = 1 },
-          { name = 'luasnip',  group_index = 1 },
-          { name = 'buffer',   group_index = 2 },
-          { name = 'path',     group_index = 2 },
+          { name = 'luasnip', group_index = 1 },
+          { name = 'buffer', group_index = 2 },
+          { name = 'path', group_index = 2 },
         },
         formatting = {
           fields = { 'kind', 'abbr', 'menu' },
@@ -188,7 +187,7 @@ return {
     'folke/which-key.nvim',
     event = 'VeryLazy',
     keys = {
-      { '<leader>t',  group = '+Test' },
+      { '<leader>t', group = '+Test' },
       { '<leader>tt', group = '+Task' },
     },
   },
@@ -211,32 +210,32 @@ return {
   {
     'nvim-neotest/neotest',
     dependencies = {
-      "nvim-neotest/nvim-nio",
+      'nvim-neotest/nvim-nio',
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
       'antoinemadec/FixCursorHold.nvim',
       'nvim-neotest/neotest-vim-test',
       'vim-test/vim-test',
       'stevearc/overseer.nvim',
-      "nvim-contrib/nvim-ginkgo",
+      'nvim-contrib/nvim-ginkgo',
     },
     keys = {
       { '<leader>td', "<cmd>w|lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>", desc = 'Debug File' },
-      { '<leader>tL', "<cmd>w|lua require('neotest').run.run_last({strategy = 'dap'})<cr>",                desc = 'Debug Last' },
-      { '<leader>ta', "<cmd>w|lua require('neotest').run.attach()<cr>",                                    desc = 'Attach' },
-      { '<leader>tf', "<cmd>w|lua require('neotest').run.run(vim.fn.expand('%'))<cr>",                     desc = 'File' },
-      { '<leader>tF', "<cmd>w|lua require('neotest').run.run(vim.loop.cwd())<cr>",                         desc = 'All Files' },
-      { '<leader>tl', "<cmd>w|lua require('neotest').run.run_last()<cr>",                                  desc = 'Last' },
-      { '<leader>tn', "<cmd>w|lua require('neotest').run.run()<cr>",                                       desc = 'Nearest' },
-      { '<leader>tN', "<cmd>w|lua require('neotest').run.run({strategy = 'dap'})<cr>",                     desc = 'Debug Nearest' },
-      { '<leader>to', "<cmd>w|lua require('neotest').output.open({ enter = true })<cr>",                   desc = 'Output' },
-      { '<leader>ts', "<cmd>w|lua require('neotest').run.stop()<cr>",                                      desc = 'Stop' },
-      { '<leader>tS', "<cmd>w|lua require('neotest').summary.toggle()<cr>",                                desc = 'Summary' },
+      { '<leader>tL', "<cmd>w|lua require('neotest').run.run_last({strategy = 'dap'})<cr>", desc = 'Debug Last' },
+      { '<leader>ta', "<cmd>w|lua require('neotest').run.attach()<cr>", desc = 'Attach' },
+      { '<leader>tf', "<cmd>w|lua require('neotest').run.run(vim.fn.expand('%'))<cr>", desc = 'File' },
+      { '<leader>tF', "<cmd>w|lua require('neotest').run.run(vim.loop.cwd())<cr>", desc = 'All Files' },
+      { '<leader>tl', "<cmd>w|lua require('neotest').run.run_last()<cr>", desc = 'Last' },
+      { '<leader>tn', "<cmd>w|lua require('neotest').run.run()<cr>", desc = 'Nearest' },
+      { '<leader>tN', "<cmd>w|lua require('neotest').run.run({strategy = 'dap'})<cr>", desc = 'Debug Nearest' },
+      { '<leader>to', "<cmd>w|lua require('neotest').output.open({ enter = true })<cr>", desc = 'Output' },
+      { '<leader>ts', "<cmd>w|lua require('neotest').run.stop()<cr>", desc = 'Stop' },
+      { '<leader>tS', "<cmd>w|lua require('neotest').summary.toggle()<cr>", desc = 'Summary' },
     },
     opts = function()
       return {
         adapters = {
-          require("neotest-plenary"),
+          require 'neotest-plenary',
           require 'neotest-vim-test' {
             ignore_file_types = { 'python', 'vim', 'lua' },
           },
@@ -259,8 +258,7 @@ return {
       vim.diagnostic.config({
         virtual_text = {
           format = function(diagnostic)
-            local message = diagnostic.message:gsub('\n', ' '):gsub('\t', ' '):gsub('%s+', ' '):gsub('^%s+',
-              '')
+            local message = diagnostic.message:gsub('\n', ' '):gsub('\t', ' '):gsub('%s+', ' '):gsub('^%s+', '')
             return message
           end,
         },
@@ -271,17 +269,17 @@ return {
   {
     'stevearc/overseer.nvim',
     keys = {
-      { '<leader>ttR', '<cmd>OverseerRunCmd<cr>',       desc = 'Run Command' },
-      { '<leader>tta', '<cmd>OverseerTaskAction<cr>',   desc = 'Task Action' },
-      { '<leader>ttb', '<cmd>OverseerBuild<cr>',        desc = 'Build' },
-      { '<leader>ttc', '<cmd>OverseerClose<cr>',        desc = 'Close' },
+      { '<leader>ttR', '<cmd>OverseerRunCmd<cr>', desc = 'Run Command' },
+      { '<leader>tta', '<cmd>OverseerTaskAction<cr>', desc = 'Task Action' },
+      { '<leader>ttb', '<cmd>OverseerBuild<cr>', desc = 'Build' },
+      { '<leader>ttc', '<cmd>OverseerClose<cr>', desc = 'Close' },
       { '<leader>ttd', '<cmd>OverseerDeleteBundle<cr>', desc = 'Delete Bundle' },
-      { '<leader>ttl', '<cmd>OverseerLoadBundle<cr>',   desc = 'Load Bundle' },
-      { '<leader>tto', '<cmd>OverseerOpen<cr>',         desc = 'Open' },
-      { '<leader>ttq', '<cmd>OverseerQuickAction<cr>',  desc = 'Quick Action' },
-      { '<leader>ttr', '<cmd>OverseerRun<cr>',          desc = 'Run' },
-      { '<leader>tts', '<cmd>OverseerSaveBundle<cr>',   desc = 'Save Bundle' },
-      { '<leader>ttt', '<cmd>OverseerToggle<cr>',       desc = 'Toggle' },
+      { '<leader>ttl', '<cmd>OverseerLoadBundle<cr>', desc = 'Load Bundle' },
+      { '<leader>tto', '<cmd>OverseerOpen<cr>', desc = 'Open' },
+      { '<leader>ttq', '<cmd>OverseerQuickAction<cr>', desc = 'Quick Action' },
+      { '<leader>ttr', '<cmd>OverseerRun<cr>', desc = 'Run' },
+      { '<leader>tts', '<cmd>OverseerSaveBundle<cr>', desc = 'Save Bundle' },
+      { '<leader>ttt', '<cmd>OverseerToggle<cr>', desc = 'Toggle' },
     },
     opts = {},
   },
