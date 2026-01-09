@@ -59,8 +59,8 @@ keymap('n', 'i', function()
 end, { expr = true })
 
 function CdAndNotify(command)
-  local path = vim.fn.expand('%:h')
-  vim.cmd(command .. " " .. path)
+  local path = vim.fn.expand '%:h'
+  vim.cmd(command .. ' ' .. path)
   vim.notify(path)
 end
 
@@ -74,8 +74,19 @@ keymap('n', '<leader>sl', '<cmd>source<CR>', { silent = true, desc = 'Load sessi
 keymap('n', '<leader>cd', '<cmd>:lua CdAndNotify("lcd")<CR>', { silent = true, desc = 'Cnange directory for window' })
 keymap('n', '<leader>ctd', '<cmd>:lua CdAndNotify("tcd")<CR>', { silent = true, desc = 'Cnange directory for tab' })
 
-keymap('n', "<leader>gdgl", "<cmd>diffget LO<cr>", { silent = true, desc = "Get local" })
-keymap('n', "<leader>gdgb", "<cmd>diffget BA<cr>", { silent = true, desc = "Get base" })
-keymap('n', "<leader>gdgr", "<cmd>diffget RE<cr>", { silent = true, desc = "Get remote" })
+keymap('n', '<leader>gdgl', '<cmd>diffget LO<cr>', { silent = true, desc = 'Get local' })
+keymap('n', '<leader>gdgb', '<cmd>diffget BA<cr>', { silent = true, desc = 'Get base' })
+keymap('n', '<leader>gdgr', '<cmd>diffget RE<cr>', { silent = true, desc = 'Get remote' })
 
 keymap({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+
+keymap('n', '<leader>pa', function()
+  vim.fn.setreg('+', vim.fn.expand '%:p')
+  vim.notify('Copied absolute path', vim.log.levels.INFO) -- Requires nvim-notify or similar
+end, { desc = 'Copy absolute file path' })
+
+-- Keymap to copy the relative path
+keymap('n', '<leader>pr', function()
+  vim.fn.setreg('+', vim.fn.expand '%')
+  vim.notify('Copied relative path', vim.log.levels.INFO)
+end, { desc = 'Copy relative file path' })
