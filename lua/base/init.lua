@@ -14,7 +14,7 @@ return {
     lazy = false,
     config = true,
     opts = {
-      excluded_filetypes = { 'nerdtree' },
+      excluded_filetypes = { 'neo-tree' },
       current_only = true,
       base = 'left',
       column = 1,
@@ -37,33 +37,76 @@ return {
   --   end,
   -- },
   {
-    'nvim-tree/nvim-tree.lua',
-    version = '*',
-    lazy = false,
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v3.x',
     dependencies = {
+      'nvim-lua/plenary.nvim',
+      'MunifTanjim/nui.nvim',
       'nvim-tree/nvim-web-devicons',
     },
-    config = function() -- opts
-      require('nvim-tree').setup {
-        sort = {
-          sorter = 'case_sensitive',
+    keys = {
+      { '<leader>e', '<cmd>Neotree toggle<cr>', desc = 'NeoTree' },
+    },
+    config = function()
+      require('neo-tree').setup {
+        close_if_last_window = false,
+        popup_border_style = 'rounded',
+        enable_git_status = true,
+        enable_diagnostics = true,
+        open_files_do_not_replace_types = { 'terminal', 'trouble', 'qf' },
+        sort_case_insensitive = false,
+        default_component_configs = {
+          indent = {
+            indent_size = 2,
+            padding = 1,
+            with_markers = true,
+            indent_marker = '│',
+            last_indent_marker = '└',
+            highlight = 'NeoTreeIndentMarker',
+            expander_collapsed = '',
+            expander_expanded = '',
+            expander_highlight = 'NeoTreeExpander',
+          },
+          icon = {
+            folder_closed = '',
+            folder_open = '',
+            folder_empty = '󰜌',
+            default = '*',
+            highlight = 'NeoTreeFileIcon',
+          },
+          modified = {
+            symbol = '[+]',
+            highlight = 'NeoTreeModified',
+          },
+          name = {
+            trailing_slash = false,
+            use_git_status_colors = true,
+            highlight = 'NeoTreeFileName',
+          },
+          git_status = {
+            symbols = {
+              added = '',
+              modified = '',
+              deleted = '✖',
+              renamed = '󰁕',
+              untracked = '',
+              ignored = '',
+              unstaged = '󰄱',
+              staged = '',
+              conflict = '',
+            },
+          },
         },
-        view = {
-          width = 30,
-        },
-        renderer = {
-          group_empty = true,
-        },
-        filters = {
-          dotfiles = false,
-        },
-        git = {
-          enable = true,
-          ignore = false,
-          timeout = 500,
+        window = {
+          mappings = {
+            ['<cr>'] = 'open_tabnew',
+            ['l'] = 'open',
+            ['s'] = 'open_vsplit',
+            ['S'] = 'open_split',
+            ['T'] = 'open_tabnew',
+          },
         },
       }
-      vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<cr>', { silent = true, desc = 'NeoVim Tree' })
     end,
   },
   {

@@ -55,6 +55,36 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+-- Open neo-tree on startup (no args or first arg is a directory)
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = augroup 'neotree',
+  callback = function()
+    local neotree_opts = {
+      toggle = false,
+      reveal = false,
+      reveal_force_cwd = false,
+      action = 'focus',
+      source = 'filesystem',
+      position = 'left',
+    }
+    local argc = vim.fn.argc()
+    if argc == 0 then
+      vim.defer_fn(function()
+        require('neo-tree.command').execute(neotree_opts)
+      end, 0)
+    elseif argc > 0 then
+      local first_arg = vim.fn.argv(0)
+      if vim.fn.isdirectory(first_arg) == 1 then
+        vim.defer_fn(function()
+          local opts = vim.tbl_extend('force', neotree_opts, { dir = first_arg })
+          require('neo-tree.command').execute(opts)
+        end, 0)
+      end
+    end
+  end,
+  once = true,
+})
+
 -- new tab change directory
 -- vim.api.nvim_create_autocmd('TabNewEntered', {
 --   pattern = '*',
