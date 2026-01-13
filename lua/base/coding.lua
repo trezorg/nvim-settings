@@ -251,6 +251,7 @@ return {
           enabled = true,
           force_default = true,
         },
+        log_level = vim.log.levels.DEBUG,
       }
     end,
     config = function(_, opts)

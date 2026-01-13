@@ -12,21 +12,18 @@ return {
   {
     'williamboman/mason.nvim',
     opts = function(_, opts)
-      vim.list_extend(
-        opts.ensure_installed,
-        {
-          'delve',
-          'gotests',
-          'golangci-lint',
-          'gofumpt',
-          'goimports',
-          'golangci-lint-langserver',
-          'impl',
-          'gomodifytags',
-          'iferr',
-          'gotestsum'
-        }
-      )
+      vim.list_extend(opts.ensure_installed, {
+        'delve',
+        'gotests',
+        'golangci-lint',
+        'gofumpt',
+        'goimports',
+        'golangci-lint-langserver',
+        'impl',
+        'gomodifytags',
+        'iferr',
+        'gotestsum',
+      })
     end,
   },
   {
@@ -91,7 +88,7 @@ return {
               usePlaceholders = true,
               completeUnimported = true,
               completeFunctionCalls = true,
-              directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules", "-.nvim" },
+              directoryFilters = { '-.git', '-.vscode', '-.idea', '-.vscode-test', '-node_modules', '-.nvim' },
             },
           },
         },
@@ -143,28 +140,34 @@ return {
     'nvim-neotest/neotest',
     dependencies = {
       'nvim-neotest/neotest-go',
-      "nvim-contrib/nvim-ginkgo",
+      'nvim-contrib/nvim-ginkgo',
+      'fredrikaverpil/neotest-golang',
     },
     opts = function(_, opts)
-      local neotest_ns = vim.api.nvim_create_namespace("neotest")
+      local neotest_ns = vim.api.nvim_create_namespace 'neotest'
       vim.diagnostic.config({
         virtual_text = {
           format = function(diagnostic)
-            local message =
-                diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+            local message = diagnostic.message:gsub('\n', ' '):gsub('\t', ' '):gsub('%s+', ' '):gsub('^%s+', '')
             return message
           end,
         },
       }, neotest_ns)
       vim.list_extend(opts.adapters, {
-        require("neotest-go")({
-          recursive_run = true,
-          experimental = {
-            test_table = true,
-          },
-          args = { "-count=1", "-timeout=60s" }
-        }),
-        require("nvim-ginkgo")
+        -- require 'neotest-go' {
+        --   recursive_run = true,
+        --   experimental = {
+        --     test_table = true,
+        --   },
+        --   args = { '-count=1', '-timeout=60s' },
+        -- },
+        require 'neotest-golang' {
+          testify_enabled = true,
+          go_test_args = { '-v', '-race', '-count=1', '-timeout=60s' },
+          dap_go_enabled = true, -- requires leoluz/nvim-dap-go
+          -- runner = 'gotestsum',
+        },
+        -- require 'nvim-ginkgo',
       })
     end,
   },
