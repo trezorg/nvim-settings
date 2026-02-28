@@ -186,7 +186,11 @@ return {
     opts = function(_, opts)
       vim.list_extend(opts.adapters, {
         require 'neotest-python' {
-          dap = { justMyCode = false },
+          dap = {
+            justMyCode = false,
+            stopOnEntry = true,
+            subProcess = true,
+          },
           runner = 'pytest',
           pytest_discover_instances = true,
           args = { '-sv' },
