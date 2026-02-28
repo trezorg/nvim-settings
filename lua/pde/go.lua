@@ -106,26 +106,25 @@ return {
             end
             -- stylua: ignore
             --
-            if client.name == "gopls" then
-              map("n", "<leader>ll", function() vim.lsp.codelens.run() end, "Code Lens")
-              map("n", "<leader>ly", "<cmd>GoModTidy<cr>", "Go Mod Tidy")
-              map("n", "<leader>lc", "<cmd>GoCoverage<Cr>", "Go Test Coverage")
-              map("n", "<leader>lt", "<cmd>GoTest<Cr>", "Go Test")
-              map("n", "<leader>lR", "<cmd>GoRun<Cr>", "Go Run")
-              map("n", "<leader>dT", "<cmd>lua require('dap-go').debug_test()<cr>", "Go Debug Test")
-              map("n", "<leader>tn", "<cmd>w|lua require('neotest').run.run({extra_args = {'-race'}})<cr>",
-                "Nearest with race")
-              if not client.server_capabilities.semanticTokensProvider then
-                local semantic = client.config.capabilities.textDocument.semanticTokens
-                client.server_capabilities.semanticTokensProvider = {
-                  full = true,
-                  legend = {
-                    tokenTypes = semantic.tokenTypes,
-                    tokenModifiers = semantic.tokenModifiers,
-                  },
-                  range = true,
-                }
-              end
+            map('n', '<leader>la', function()
+              vim.lsp.codelens.run()
+            end, 'Code Lens')
+            map('n', '<leader>ly', '<cmd>GoModTidy<cr>', 'Go Mod Tidy')
+            map('n', '<leader>lc', '<cmd>GoCoverage<Cr>', 'Go Test Coverage')
+            map('n', '<leader>lt', '<cmd>GoTest<Cr>', 'Go Test')
+            map('n', '<leader>lR', '<cmd>GoRun<Cr>', 'Go Run')
+            map('n', '<leader>dT', "<cmd>lua require('dap-go').debug_test()<cr>", 'Go Debug Test')
+            map('n', '<leader>tn', "<cmd>w|lua require('neotest').run.run({extra_args = {'-race'}})<cr>", 'Nearest with race')
+            if not client.server_capabilities.semanticTokensProvider then
+              local semantic = client.config.capabilities.textDocument.semanticTokens
+              client.server_capabilities.semanticTokensProvider = {
+                full = true,
+                legend = {
+                  tokenTypes = semantic.tokenTypes,
+                  tokenModifiers = semantic.tokenModifiers,
+                },
+                range = true,
+              }
             end
           end)
         end,
@@ -154,13 +153,13 @@ return {
         },
       }, neotest_ns)
       vim.list_extend(opts.adapters, {
-        -- require 'neotest-go' {
-        --   recursive_run = true,
-        --   experimental = {
-        --     test_table = true,
-        --   },
-        --   args = { '-count=1', '-timeout=60s' },
-        -- },
+        require 'neotest-go' {
+          recursive_run = true,
+          experimental = {
+            test_table = true,
+          },
+          args = { '-count=1', '-timeout=60s' },
+        },
         require 'neotest-golang' {
           testify_enabled = true,
           go_test_args = { '-v', '-race', '-count=1', '-timeout=60s' },

@@ -3,7 +3,7 @@ if not require('config').pde.rust then
 end
 
 local function get_codelldb()
-  local path = vim.fn.expand "$MASON/packages/codelldb"
+  local path = vim.fn.expand '$MASON/packages/codelldb'
   -- local mr = require 'mason-registry'
   -- local codelldb = mr.get_package('codelldb')
   local extension_path = path .. '/extension/'
@@ -93,7 +93,7 @@ return {
                 vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter', 'CursorHold', 'InsertLeave' }, {
                   pattern = { '*.rs' },
                   callback = function()
-                    vim.lsp.codelens.refresh()
+                    vim.lsp.codelens.enable(true)
                   end,
                 })
               end,
@@ -164,7 +164,7 @@ return {
   {
     'mrcjkb/rustaceanvim',
     version = '^6', -- Recommended
-    lazy = false,   -- This plugin is already lazy
+    lazy = false, -- This plugin is already lazy
   },
   {
     'nvim-neotest/neotest',
@@ -174,8 +174,8 @@ return {
     opts = function(_, opts)
       vim.list_extend(opts.adapters, {
         -- curl -LsSf https://get.nexte.st/latest/linux | tar zxf - -C ${CARGO_HOME:-~/.cargo}/bin
-        require('neotest-rust') {
-          args = { "--no-capture" }
+        require 'neotest-rust' {
+          args = { '--no-capture' },
         },
       })
     end,
