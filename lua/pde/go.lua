@@ -114,7 +114,16 @@ return {
             map('n', '<leader>lt', '<cmd>GoTest<Cr>', 'Go Test')
             map('n', '<leader>lR', '<cmd>GoRun<Cr>', 'Go Run')
             map('n', '<leader>dT', "<cmd>lua require('dap-go').debug_test()<cr>", 'Go Debug Test')
-            map('n', '<leader>tn', "<cmd>w|lua require('neotest').run.run({extra_args = {'-race'}})<cr>", 'Nearest with race')
+            map('n', '<leader>tn', function()
+              vim.cmd 'write'
+              local neotest = require 'neotest'
+              local nearest = neotest.run.get_tree_from_args()
+              if nearest then
+                neotest.run.run({ extra_args = { '-race' } })
+              else
+                neotest.run.run({ vim.fn.expand '%', extra_args = { '-race' } })
+              end
+            end, 'Nearest (fallback file) with race')
             if not client.server_capabilities.semanticTokensProvider then
               local semantic = client.config.capabilities.textDocument.semanticTokens
               client.server_capabilities.semanticTokensProvider = {
@@ -140,7 +149,6 @@ return {
     dependencies = {
       'nvim-neotest/neotest-go',
       'nvim-contrib/nvim-ginkgo',
-      'fredrikaverpil/neotest-golang',
     },
     opts = function(_, opts)
       local neotest_ns = vim.api.nvim_create_namespace 'neotest'
@@ -152,22 +160,21 @@ return {
           end,
         },
       }, neotest_ns)
-      vim.list_extend(opts.adapters, {
-        require 'neotest-go' {
-          recursive_run = true,
-          experimental = {
-            test_table = true,
-          },
-          args = { '-count=1', '-timeout=60s' },
+
+      opts.adapters = opts.adapters or {}
+
+      local neotest_go = require 'neotest-go' {
+        recursive_run = true,
+        experimental = {
+          test_table = true,
         },
-        require 'neotest-golang' {
-          testify_enabled = true,
-          go_test_args = { '-v', '-race', '-count=1', '-timeout=60s' },
-          dap_go_enabled = true, -- requires leoluz/nvim-dap-go
-          -- runner = 'gotestsum',
-        },
-        -- require 'nvim-ginkgo',
-      })
+        args = { '-race', '-count=1', '-timeout=60s' },
+      }
+
+      neotest_go.root = require('neotest.lib').files.match_root_pattern('go.work', 'go.mod', 'go.sum')
+
+      table.insert(opts.adapters, 1, neotest_go)
+      -- table.insert(opts.adapters, require 'nvim-ginkgo')
     end,
   },
 }

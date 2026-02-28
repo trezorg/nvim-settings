@@ -214,7 +214,6 @@ return {
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
       'antoinemadec/FixCursorHold.nvim',
-      'nvim-neotest/neotest-vim-test',
       'vim-test/vim-test',
       'stevearc/overseer.nvim',
       'nvim-contrib/nvim-ginkgo',
@@ -236,9 +235,9 @@ return {
       return {
         adapters = {
           require 'neotest-plenary',
-          require 'neotest-vim-test' {
-            ignore_file_types = { 'python', 'vim', 'lua' },
-          },
+        },
+        discovery = {
+          enabled = false,
         },
         status = { virtual_text = true },
         output = { open_on_run = true },
@@ -255,6 +254,12 @@ return {
       }
     end,
     config = function(_, opts)
+      -- Work around a neotest subprocess regression that breaks neotest-go
+      -- discovery after recent updates (yield across C-call boundary).
+      -- Run parsing in the main instance instead of child subprocess.
+      local subprocess = require 'neotest.lib'.subprocess
+      subprocess.init = function() end
+
       local neotest_ns = vim.api.nvim_create_namespace 'neotest'
       vim.diagnostic.config({
         virtual_text = {
