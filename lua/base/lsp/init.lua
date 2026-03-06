@@ -80,6 +80,15 @@ return {
     },
   },
   {
+    'RubixDev/mason-update-all',
+    opts = {
+      show_no_updates_notification = true,
+    },
+    config = function(_, opts)
+      require('mason-update-all').setup(opts)
+    end,
+  },
+  {
     'williamboman/mason.nvim',
     build = ':MasonUpdate',
     cmd = 'Mason',
