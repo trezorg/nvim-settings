@@ -59,6 +59,16 @@ return {
               map("n", "<leader>ll", function() vim.lsp.codelens.run() end, "Code Lens")
               map("n", "<leader>lt", "<cmd>Cargo test<cr>", "Cargo test")
               map("n", "<leader>lR", "<cmd>Cargo run<cr>", "Cargo run")
+              map('n', '<leader>tn', function()
+                vim.cmd 'write'
+                local neotest = require 'neotest'
+                local nearest = neotest.run.get_tree_from_args()
+                if nearest then
+                  neotest.run.run()
+                else
+                  neotest.run.run(vim.fn.expand '%')
+                end
+              end, 'Nearest (fallback file)')
             end
           end)
 
@@ -172,12 +182,16 @@ return {
       'rouge8/neotest-rust',
     },
     opts = function(_, opts)
-      vim.list_extend(opts.adapters, {
+      opts.adapters = opts.adapters or {}
+
+      local neotest_rust = require 'neotest-rust' {
         -- curl -LsSf https://get.nexte.st/latest/linux | tar zxf - -C ${CARGO_HOME:-~/.cargo}/bin
-        require 'neotest-rust' {
-          args = { '--no-capture' },
-        },
-      })
+        args = { '--no-capture' },
+      }
+
+      neotest_rust.root = require('neotest.lib').files.match_root_pattern 'Cargo.toml'
+
+      table.insert(opts.adapters, 1, neotest_rust)
     end,
   },
 }
