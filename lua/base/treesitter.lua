@@ -1,38 +1,39 @@
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
+    'nvim-treesitter/nvim-treesitter',
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-      "JoosepAlviste/nvim-ts-context-commentstring",
+      -- 'nvim-treesitter/nvim-treesitter-textobjects',
+      'JoosepAlviste/nvim-ts-context-commentstring',
     },
-    build = ":TSUpdate",
-    event = { "BufReadPost", "BufNewFile" },
+    branch = 'main',
+    build = ':TSUpdate',
+    event = { 'BufReadPost', 'BufNewFile' },
     opts = {
       sync_install = false,
       ensure_installed = {
-        "bash",
-        "dockerfile",
-        "html",
-        "markdown",
-        "markdown_inline",
-        "org",
-        "query",
-        "regex",
-        "latex",
-        "vim",
-        "vimdoc",
-        "yaml",
+        'bash',
+        'dockerfile',
+        'html',
+        'markdown',
+        'markdown_inline',
+        'org',
+        'query',
+        'regex',
+        'latex',
+        'vim',
+        'vimdoc',
+        'yaml',
       },
-      highlight = { enable = true, additional_vim_regex_highlighting = { "org", "markdown" } },
+      highlight = { enable = true, additional_vim_regex_highlighting = { 'org', 'markdown' } },
       indent = { enable = true },
       context_commentstring = { enable = false, enable_autocmd = false },
       incremental_selection = {
         enable = true,
         keymaps = {
-          init_selection = "gnn",
-          node_incremental = "grn",
-          scope_incremental = "grc",
-          node_decremental = "grm",
+          init_selection = 'gnn',
+          node_incremental = 'grn',
+          scope_incremental = 'grc',
+          node_decremental = 'grm',
         },
       },
       textobjects = {
@@ -41,21 +42,21 @@ return {
           lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
           keymaps = {
             -- You can use the capture groups defined in textobjects.scm
-            ["aa"] = "@parameter.outer",
-            ["ia"] = "@parameter.inner",
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-            ["ac"] = "@class.outer",
-            ["ic"] = "@class.inner",
+            ['aa'] = '@parameter.outer',
+            ['ia'] = '@parameter.inner',
+            ['af'] = '@function.outer',
+            ['if'] = '@function.inner',
+            ['ac'] = '@class.outer',
+            ['ic'] = '@class.inner',
           },
         },
       },
-      matchup = {
-        enable = true,
-      },
+      -- matchup = {
+      --   enable = true,
+      -- },
     },
     config = function(_, opts)
-      if type(opts.ensure_installed) == "table" then
+      if type(opts.ensure_installed) == 'table' then
         ---@type table<string, boolean>
         local added = {}
         opts.ensure_installed = vim.tbl_filter(function(lang)
@@ -66,7 +67,8 @@ return {
           return true
         end, opts.ensure_installed)
       end
-      require("nvim-treesitter.configs").setup(opts)
+      -- require('nvim-treesitter.configs').setup(opts)
+      require('nvim-treesitter').setup(opts)
     end,
   },
 }

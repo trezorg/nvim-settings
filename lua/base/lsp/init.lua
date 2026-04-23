@@ -1,3 +1,9 @@
+if vim.fn.exists ':LspInfo' == 0 then
+  vim.api.nvim_create_user_command('LspInfo', 'checkhealth vim.lsp', {
+    desc = 'Alias to `:checkhealth vim.lsp`',
+  })
+end
+
 return {
   {
     'folke/which-key.nvim',
