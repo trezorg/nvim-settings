@@ -10,10 +10,32 @@ return {
     keys = { { 'gc', mode = { 'n', 'v' } }, { 'gcc', mode = { 'n', 'v' } }, { 'gbc', mode = { 'n', 'v' } } },
     config = function(_, _)
       vim.g.skip_ts_context_commentstring_module = true
-      -- require('ts_context_commentstring').setup {}
+      local comment_ft = require 'Comment.ft'
+      local ts_comment_pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook()
+
+      -- Comment.nvim assumes get_parser() errors when no parser is available.
+      -- Neovim 0.12 can return nil instead, which leads to `[Comment.nvim] nil`.
+      comment_ft.calculate = function(ctx)
+        local ok, parser = pcall(vim.treesitter.get_parser, vim.api.nvim_get_current_buf())
+
+        if not ok or not parser then
+          return comment_ft.get(vim.bo.filetype, ctx.ctype)
+        end
+
+        local tree = comment_ft.contains(parser, {
+          ctx.range.srow - 1,
+          ctx.range.scol,
+          ctx.range.erow - 1,
+          ctx.range.ecol,
+        })
+        local lang = tree and tree:lang() or vim.bo.filetype
+
+        return comment_ft.get(lang, ctx.ctype) or comment_ft.get(vim.bo.filetype, ctx.ctype)
+      end
+
       local opts = {
         ignore = '^$',
-        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+        pre_hook = ts_comment_pre_hook,
       }
       require('Comment').setup(opts)
     end,
@@ -257,7 +279,7 @@ return {
       -- Work around a neotest subprocess regression that breaks neotest-go
       -- discovery after recent updates (yield across C-call boundary).
       -- Run parsing in the main instance instead of child subprocess.
-      local subprocess = require 'neotest.lib'.subprocess
+      local subprocess = require('neotest.lib').subprocess
       subprocess.init = function() end
 
       local neotest_ns = vim.api.nvim_create_namespace 'neotest'
