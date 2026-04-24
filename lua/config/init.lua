@@ -19,6 +19,7 @@ return {
     terraform = true,
     typescript = true,
     tilt = true,
+    plantuml = true,
     vuejs = false,
     tailwind = false,
     svelte = false,

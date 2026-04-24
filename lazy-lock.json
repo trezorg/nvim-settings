@@ -69,6 +69,7 @@
   "opencode.nvim": { "branch": "main", "commit": "8edc19ac64e3075d4d68e49ef6846dec562ed316" },
   "overseer.nvim": { "branch": "master", "commit": "f818eefff81f4b12fb7cf236f1b6c16768a2fcbc" },
   "persistence.nvim": { "branch": "main", "commit": "b20b2a7887bd39c1a356980b45e03250f3dce49c" },
+  "plantuml.nvim": { "branch": "master", "commit": "6983e482c9d272a764aa7f8b63be30ee59c7fc2d" },
   "plenary.nvim": { "branch": "master", "commit": "74b06c6c75e4eeb3108ec01852001636d85a932b" },
   "render-markdown.nvim": { "branch": "main", "commit": "d67113f11384c0dad96fced2f7b91f1fc811e97f" },
   "rust-tools.nvim": { "branch": "master", "commit": "676187908a1ce35ffcd727c654ed68d851299d3e" },
