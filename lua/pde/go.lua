@@ -2,6 +2,47 @@ if not require('config').pde.go then
   return {}
 end
 
+local function set_go_test_keymaps(bufnr)
+  local map = function(lhs, rhs, desc)
+    vim.keymap.set('n', lhs, rhs, { silent = true, desc = desc, buffer = bufnr, noremap = true })
+  end
+
+  local run_nearest = function(args, fallback)
+    vim.cmd 'write'
+    args = args or {}
+
+    local neotest = require 'neotest'
+    local nearest = neotest.run.get_tree_from_args()
+    if nearest then
+      neotest.run.run(vim.tbl_extend('force', { nearest:data().id }, args))
+    else
+      fallback()
+    end
+  end
+
+  map('<leader>tn', function()
+    run_nearest({ extra_args = { '-race' } }, function()
+      require('go.gotest').test_func('-b', '-race')
+    end)
+  end, 'Nearest (fallback GoTest) with race')
+  map('<leader>tf', function()
+    vim.cmd 'write'
+    require('go.gotest').test_file('-b', '-race')
+  end, 'File (GoTestFile) with race')
+  map('<leader>tN', function()
+    run_nearest({ strategy = 'dap' }, function()
+      vim.cmd 'GoDebug -n'
+    end)
+  end, 'Debug nearest (fallback GoDebug)')
+end
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'go',
+  callback = function(args)
+    set_go_test_keymaps(args.buf)
+  end,
+})
+
 return {
   {
     'nvim-treesitter/nvim-treesitter',
@@ -114,16 +155,7 @@ return {
             map('n', '<leader>lt', '<cmd>GoTest<Cr>', 'Go Test')
             map('n', '<leader>lR', '<cmd>GoRun<Cr>', 'Go Run')
             map('n', '<leader>dT', "<cmd>lua require('dap-go').debug_test()<cr>", 'Go Debug Test')
-            map('n', '<leader>tn', function()
-              vim.cmd 'write'
-              local neotest = require 'neotest'
-              local nearest = neotest.run.get_tree_from_args()
-              if nearest then
-                neotest.run.run({ extra_args = { '-race' } })
-              else
-                neotest.run.run({ vim.fn.expand '%', extra_args = { '-race' } })
-              end
-            end, 'Nearest (fallback file) with race')
+            set_go_test_keymaps(bufnr)
             if not client.server_capabilities.semanticTokensProvider then
               local semantic = client.config.capabilities.textDocument.semanticTokens
               client.server_capabilities.semanticTokensProvider = {

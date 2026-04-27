@@ -7,7 +7,7 @@ return {
     },
     branch = 'main',
     build = ':TSUpdate',
-    event = { 'BufReadPost', 'BufNewFile' },
+    lazy = false,
     opts = {
       sync_install = false,
       ensure_installed = {
@@ -56,19 +56,49 @@ return {
       -- },
     },
     config = function(_, opts)
-      if type(opts.ensure_installed) == 'table' then
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'TSUpdate',
+        callback = function()
+          require('nvim-treesitter.parsers').org = {
+            install_info = {
+              url = 'https://github.com/milisims/tree-sitter-org',
+              revision = 'main',
+              queries = 'queries',
+            },
+          }
+        end,
+      })
+
+      local ensure_installed = opts.ensure_installed
+      opts.ensure_installed = nil
+
+      if type(ensure_installed) == 'table' then
         ---@type table<string, boolean>
         local added = {}
-        opts.ensure_installed = vim.tbl_filter(function(lang)
+        ensure_installed = vim.tbl_filter(function(lang)
           if added[lang] then
             return false
           end
           added[lang] = true
           return true
-        end, opts.ensure_installed)
+        end, ensure_installed)
       end
+
       -- require('nvim-treesitter.configs').setup(opts)
-      require('nvim-treesitter').setup(opts)
+      local treesitter = require 'nvim-treesitter'
+      treesitter.setup(opts)
+
+      if type(ensure_installed) == 'table' then
+        local available = treesitter.get_available()
+        local installed = treesitter.get_installed 'parsers'
+        local missing = vim.tbl_filter(function(lang)
+          return vim.list_contains(available, lang) and not vim.list_contains(installed, lang)
+        end, ensure_installed)
+
+        if #missing > 0 then
+          treesitter.install(missing)
+        end
+      end
     end,
   },
 }
