@@ -19,6 +19,10 @@ return {
       vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreview<CR>', { silent = true, desc = 'MarkdownPreview' })
       vim.keymap.set('n', '<leader>ms', '<cmd>MarkdownPreviewStop<CR>', { silent = true, desc = 'MarkdownPreviewStop' })
     end,
+    init = function()
+      vim.g.mkdp_filetypes = { 'markdown' }
+    end,
+    ft = { 'markdown' },
   },
   {
     'williamboman/mason.nvim',
