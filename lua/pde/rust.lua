@@ -12,6 +12,22 @@ local function get_codelldb()
   return codelldb_path, liblldb_path
 end
 
+local function setup_crates_keymaps(bufnr)
+  local wk = require 'which-key'
+  local keys = { mode = { 'n', 'v' }, { '<leader>lc', group = '+Crates' } }
+  wk.add(keys)
+
+  local map = function(mode, lhs, rhs, desc)
+    vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc, buffer = bufnr, noremap = true })
+  end
+
+  map('n', '<leader>lcy', "<cmd>lua require'crates'.open_repository()<cr>", 'Open Repository')
+  map('n', '<leader>lcp', "<cmd>lua require'crates'.show_popup()<cr>", 'Show Popup')
+  map('n', '<leader>lci', "<cmd>lua require'crates'.show_crate_popup()<cr>", 'Show Info')
+  map('n', '<leader>lcf', "<cmd>lua require'crates'.show_features_popup()<cr>", 'Show Features')
+  map('n', '<leader>lcd', "<cmd>lua require'crates'.show_dependencies_popup()<cr>", 'Show Dependencies')
+end
+
 return {
   {
     'nvim-treesitter/nvim-treesitter',
@@ -25,99 +41,7 @@ return {
       vim.list_extend(opts.ensure_installed, { 'codelldb' })
     end,
   },
-  {
-    'neovim/nvim-lspconfig',
-    dependencies = { 'simrat39/rust-tools.nvim', 'rust-lang/rust.vim' },
-    opts = {
-      servers = {
-        rust_analyzer = {
-          settings = {
-            ['rust-analyzer'] = {
-              cargo = { allFeatures = true },
-              checkOnSave = {
-                command = 'cargo clippy',
-                extraArgs = { '--no-deps' },
-              },
-            },
-          },
-        },
-      },
-      setup = {
-        rust_analyzer = function(_, opts)
-          local codelldb_path, liblldb_path = get_codelldb()
-          local lsp_utils = require 'base.lsp.utils'
-          lsp_utils.on_attach(function(client, bufnr)
-            local map = function(mode, lhs, rhs, desc)
-              if desc then
-                desc = desc
-              end
-              vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc, buffer = bufnr, noremap = true })
-            end
-            -- stylua: ignore
-            if client.name == "rust_analyzer" then
-              map("n", "<leader>le", "<cmd>RustRunnables<cr>", "Runnables")
-              map("n", "<leader>ll", function() vim.lsp.codelens.run() end, "Code Lens")
-              map("n", "<leader>lt", "<cmd>Cargo test<cr>", "Cargo test")
-              map("n", "<leader>lR", "<cmd>Cargo run<cr>", "Cargo run")
-              map('n', '<leader>tn', function()
-                vim.cmd 'write'
-                local neotest = require 'neotest'
-                local nearest = neotest.run.get_tree_from_args()
-                if nearest then
-                  neotest.run.run()
-                else
-                  neotest.run.run(vim.fn.expand '%')
-                end
-              end, 'Nearest (fallback file)')
-            end
-          end)
-
-          vim.api.nvim_create_autocmd({ 'BufEnter' }, {
-            pattern = { 'Cargo.toml' },
-            callback = function(event)
-              local bufnr = event.buf
-
-              -- Register keymappings
-              local wk = require 'which-key'
-              local keys = { mode = { 'n', 'v' }, { '<leader>lc', group = '+Crates' } }
-              wk.add(keys)
-
-              local map = function(mode, lhs, rhs, desc)
-                if desc then
-                  desc = desc
-                end
-                vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc, buffer = bufnr, noremap = true })
-              end
-              map('n', '<leader>lcy', "<cmd>lua require'crates'.open_repository()<cr>", 'Open Repository')
-              map('n', '<leader>lcp', "<cmd>lua require'crates'.show_popup()<cr>", 'Show Popup')
-              map('n', '<leader>lci', "<cmd>lua require'crates'.show_crate_popup()<cr>", 'Show Info')
-              map('n', '<leader>lcf', "<cmd>lua require'crates'.show_features_popup()<cr>", 'Show Features')
-              map('n', '<leader>lcd', "<cmd>lua require'crates'.show_dependencies_popup()<cr>", 'Show Dependencies')
-            end,
-          })
-
-          require('rust-tools').setup {
-            tools = {
-              hover_actions = { border = 'solid' },
-              on_initialized = function()
-                vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter', 'CursorHold', 'InsertLeave' }, {
-                  pattern = { '*.rs' },
-                  callback = function()
-                    vim.lsp.codelens.enable(true)
-                  end,
-                })
-              end,
-            },
-            server = opts,
-            dap = {
-              adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
-            },
-          }
-          return true
-        end,
-      },
-    },
-  },
+  { 'rust-lang/rust.vim' },
   {
     'saecki/crates.nvim',
     event = { 'BufRead Cargo.toml' },
@@ -132,6 +56,16 @@ return {
     },
     config = function(_, opts)
       require('crates').setup(opts)
+      vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+        pattern = { 'Cargo.toml' },
+        callback = function(event)
+          setup_crates_keymaps(event.buf)
+        end,
+      })
+
+      if vim.fn.expand '%:t' == 'Cargo.toml' then
+        setup_crates_keymaps(0)
+      end
     end,
   },
   {
@@ -175,6 +109,61 @@ return {
     'mrcjkb/rustaceanvim',
     version = '^6', -- Recommended
     lazy = false, -- This plugin is already lazy
+    init = function()
+      vim.g.rustaceanvim = {
+        tools = {
+          hover_actions = { border = 'solid' },
+        },
+        server = {
+          capabilities = require('base.lsp.utils').capabilities(),
+          default_settings = {
+            ['rust-analyzer'] = {
+              cargo = { allFeatures = true },
+              checkOnSave = {
+                command = 'cargo clippy',
+                extraArgs = { '--no-deps' },
+              },
+            },
+          },
+          on_attach = function(client, bufnr)
+            local map = function(mode, lhs, rhs, desc)
+              vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc, buffer = bufnr, noremap = true })
+            end
+
+            local run_codelens = function()
+              vim.lsp.codelens.run()
+            end
+
+            -- map({ 'n', 'v' }, '<leader>lA', function()
+            --   vim.cmd.RustLsp 'codeAction'
+            -- end, 'Code Action')
+
+            map({ 'n', 'v' }, '<leader>lA', vim.lsp.buf.code_action, 'Code Action')
+            map('n', '<leader>la', run_codelens, 'Code Lens')
+            map('n', '<leader>le', '<cmd>RustLsp runnables<cr>', 'Runnables')
+            map('n', '<leader>ll', run_codelens, 'Code Lens')
+            map('n', '<leader>lt', '<cmd>Cargo test<cr>', 'Cargo test')
+            map('n', '<leader>lR', '<cmd>Cargo run<cr>', 'Cargo run')
+            map('n', '<leader>tn', function()
+              vim.cmd 'write'
+              local neotest = require 'neotest'
+              local nearest = neotest.run.get_tree_from_args()
+              if nearest then
+                neotest.run.run()
+              else
+                neotest.run.run(vim.fn.expand '%')
+              end
+            end, 'Nearest (fallback file)')
+          end,
+        },
+      }
+      vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter', 'CursorHold', 'InsertLeave' }, {
+        pattern = { '*.rs' },
+        callback = function()
+          vim.lsp.codelens.enable(true)
+        end,
+      })
+    end,
   },
   {
     'nvim-neotest/neotest',
