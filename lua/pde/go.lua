@@ -43,6 +43,54 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if not client or client.name ~= 'gopls' then
+      return
+    end
+    vim.schedule(function()
+      local bufnr = args.buf
+      local map = function(mode, lhs, rhs, desc)
+        vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc, buffer = bufnr, noremap = true })
+      end
+      map('n', '<leader>la', function()
+        vim.lsp.codelens.run()
+      end, 'Code Lens')
+      map({ 'n', 'v' }, '<leader>lA', vim.lsp.buf.code_action, 'Code Action')
+      map('n', '<leader>ly', '<cmd>GoModTidy<cr>', 'Go Mod Tidy')
+      map('n', '<leader>lc', '<cmd>GoCoverage<Cr>', 'Go Test Coverage')
+      map('n', '<leader>lt', '<cmd>GoTest<Cr>', 'Go Test')
+      map('n', '<leader>lR', '<cmd>GoRun<Cr>', 'Go Run')
+      map('n', '<leader>dT', "<cmd>lua require('dap-go').debug_test()<cr>", 'Go Debug Test')
+      set_go_test_keymaps(bufnr)
+      if not client.server_capabilities.semanticTokensProvider then
+        local ok, semantic = pcall(function()
+          return client.config.capabilities.textDocument.semanticTokens
+        end)
+        if ok and semantic then
+          client.server_capabilities.semanticTokensProvider = {
+            full = true,
+            legend = {
+              tokenTypes = semantic.tokenTypes,
+              tokenModifiers = semantic.tokenModifiers,
+            },
+            range = true,
+          }
+        end
+      end
+      vim.lsp.codelens.enable(true, { bufnr = bufnr })
+    end)
+  end,
+})
+
+vim.api.nvim_create_autocmd({ 'BufWritePost', 'CursorHold', 'InsertLeave' }, {
+  pattern = '*.go',
+  callback = function()
+    vim.lsp.codelens.enable(true, { bufnr = 0 })
+  end,
+})
+
 return {
   {
     'nvim-treesitter/nvim-treesitter',
@@ -134,41 +182,6 @@ return {
           },
         },
         golangci_lint_ls = {},
-      },
-      setup = {
-        gopls = function(_, _)
-          local lsp_utils = require 'base.lsp.utils'
-          lsp_utils.on_attach(function(client, bufnr)
-            local map = function(mode, lhs, rhs, desc)
-              if desc then
-                desc = desc
-              end
-              vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc, buffer = bufnr, noremap = true })
-            end
-            -- stylua: ignore
-            --
-            map('n', '<leader>la', function()
-              vim.lsp.codelens.run()
-            end, 'Code Lens')
-            map('n', '<leader>ly', '<cmd>GoModTidy<cr>', 'Go Mod Tidy')
-            map('n', '<leader>lc', '<cmd>GoCoverage<Cr>', 'Go Test Coverage')
-            map('n', '<leader>lt', '<cmd>GoTest<Cr>', 'Go Test')
-            map('n', '<leader>lR', '<cmd>GoRun<Cr>', 'Go Run')
-            map('n', '<leader>dT', "<cmd>lua require('dap-go').debug_test()<cr>", 'Go Debug Test')
-            set_go_test_keymaps(bufnr)
-            if not client.server_capabilities.semanticTokensProvider then
-              local semantic = client.config.capabilities.textDocument.semanticTokens
-              client.server_capabilities.semanticTokensProvider = {
-                full = true,
-                legend = {
-                  tokenTypes = semantic.tokenTypes,
-                  tokenModifiers = semantic.tokenModifiers,
-                },
-                range = true,
-              }
-            end
-          end)
-        end,
       },
     },
   },

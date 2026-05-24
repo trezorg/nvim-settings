@@ -100,6 +100,9 @@ function M.setup(_, opts)
         if server_opts.mason == false or not vim.tbl_contains(all_mslp_servers, server) then
           setup(server)
         else
+          if vim.lsp.config then
+            vim.lsp.config(server, server_opts)
+          end
           ensure_installed[#ensure_installed + 1] = server
         end
       end
