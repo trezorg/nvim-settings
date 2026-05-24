@@ -87,6 +87,6 @@ end, { desc = 'Copy absolute file path' })
 
 -- Keymap to copy the relative path
 keymap('n', '<leader>pr', function()
-  vim.fn.setreg('+', vim.fn.expand '%')
+  vim.fn.setreg('+', vim.fn.fnamemodify(vim.fn.expand '%', ':.'))
   vim.notify('Copied relative path', vim.log.levels.INFO)
 end, { desc = 'Copy relative file path' })
