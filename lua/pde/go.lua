@@ -157,6 +157,7 @@ return {
                 generate = true,
                 regenerate_cgo = true,
                 run_govulncheck = true,
+                vulncheck = true,
                 test = true,
                 tidy = true,
                 upgrade_dependency = true,
