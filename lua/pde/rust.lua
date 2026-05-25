@@ -107,12 +107,12 @@ return {
   },
   {
     'mrcjkb/rustaceanvim',
-    version = '^6', -- Recommended
+    version = '^9', -- Recommended
     lazy = false, -- This plugin is already lazy
     init = function()
       vim.g.rustaceanvim = {
         tools = {
-          hover_actions = { border = 'solid' },
+          float_win_config = { border = 'solid' },
         },
         server = {
           capabilities = require('base.lsp.utils').capabilities(),
