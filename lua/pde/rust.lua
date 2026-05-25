@@ -119,9 +119,25 @@ return {
           default_settings = {
             ['rust-analyzer'] = {
               cargo = { allFeatures = true },
-              checkOnSave = {
-                command = 'cargo clippy',
-                extraArgs = { '--no-deps' },
+              checkOnSave = true,
+              check = {
+                command = 'clippy',
+                extraArgs = {
+                  '--all-targets',
+                  '--all-features',
+                  '--locked',
+                  '--',
+                  '-D',
+                  'warnings',
+                  '-D',
+                  'clippy::all',
+                  '-D',
+                  'clippy::pedantic',
+                  '-D',
+                  'clippy::nursery',
+                  '-D',
+                  'clippy::cargo',
+                },
               },
             },
           },
