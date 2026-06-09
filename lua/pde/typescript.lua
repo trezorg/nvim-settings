@@ -15,9 +15,14 @@ return {
       vim.list_extend(opts.ensure_installed, { 'typescript-language-server', 'eslint-lsp' })
     end,
   },
+
+  {
+    'pmizio/typescript-tools.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+    opts = {},
+  },
   {
     'neovim/nvim-lspconfig',
-    dependencies = { 'jose-elias-alvarez/typescript.nvim' },
     opts = {
       -- make sure mason installs the server
       servers = {
