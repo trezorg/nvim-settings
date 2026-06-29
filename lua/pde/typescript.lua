@@ -74,7 +74,7 @@ return {
       'nvimtools/none-ls-extras.nvim',
     },
     opts = function(_, opts)
-      table.insert(opts.sources, require 'typescript.extensions.null-ls.code-actions')
+      -- table.insert(opts.sources, require 'typescript.extensions.null-ls.code-actions')
       table.insert(opts.sources, require 'none-ls.diagnostics.eslint')
     end,
   },
