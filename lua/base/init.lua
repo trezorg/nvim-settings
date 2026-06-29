@@ -148,14 +148,14 @@ return {
     dependencies = {
       'tpope/vim-rhubarb',
     },
-    -- stylua: ignore
-    keys = {
-      { "<leader>gs",  "<cmd>Git<cr>",               desc = "Status" },
-      { "<leader>gb",  "<cmd>Git blame<cr>",         desc = "Blame" },
-      { "<leader>gl",  "<cmd>Git log<cr>",           desc = "Log" },
-      { "<leader>gdd", "<cmd>Git diff<cr>",          desc = "Diff" },
-      { "<leader>gdc", "<cmd>Git diff --cached<cr>", desc = "Diff cached" },
-    },
+        -- stylua: ignore
+        keys = {
+            { "<leader>gs",  "<cmd>Git<cr>",               desc = "Status" },
+            { "<leader>gb",  "<cmd>Git blame<cr>",         desc = "Blame" },
+            { "<leader>gl",  "<cmd>Git log<cr>",           desc = "Log" },
+            { "<leader>gdd", "<cmd>Git diff<cr>",          desc = "Diff" },
+            { "<leader>gdc", "<cmd>Git diff --cached<cr>", desc = "Diff cached" },
+        },
   },
   {
     'sindrets/diffview.nvim',
@@ -171,17 +171,17 @@ return {
     'folke/persistence.nvim',
     event = 'BufReadPre',
     opts = { options = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help' } },
-    -- stylua: ignore
-    keys = {
-      { "<leader>qs", function() require("persistence").load() end,                desc = "Restore Session" },
-      { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
-      {
-        "<leader>qd",
-        function() require("persistence").stop() end,
-        desc =
-        "Don't Save Current Session"
-      },
-    },
+        -- stylua: ignore
+        keys = {
+            { "<leader>qs", function() require("persistence").load() end,                desc = "Restore Session" },
+            { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
+            {
+                "<leader>qd",
+                function() require("persistence").stop() end,
+                desc =
+                "Don't Save Current Session"
+            },
+        },
   },
   {
     'folke/which-key.nvim',
@@ -199,9 +199,11 @@ return {
     opts = {
       enabled = true,
       execution_message = {
-        message = function() -- message to print on save
-          return ('AutoSave: saved at ' .. vim.fn.strftime '%H:%M:%S')
-        end,
+        -- message = function() -- message to print on save
+        --   return ('AutoSave: saved at ' .. vim.fn.strftime '%H:%M:%S')
+        -- end,
+        --
+        message = '',
         dim = 0.18, -- dim the color of `message`
         cleaning_interval = 100, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
       },
