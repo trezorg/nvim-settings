@@ -7,6 +7,7 @@ return {
     nginx = true,
     db = true,
     go = true,
+    groovy = true,
     helm = true,
     html = true,
     json = true,
