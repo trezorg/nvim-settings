@@ -10,9 +10,9 @@ opt.confirm = true
 opt.cursorline = true
 opt.expandtab = true
 opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-opt.foldcolumn = '1'        -- '0' is not bad
+opt.foldcolumn = '1' -- '0' is not bad
 opt.foldenable = true
-opt.foldlevel = 99          -- Using ufo provider need a large value, feel free to decrease the value
+opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 opt.foldlevelstart = 99
 opt.formatoptions = 'jqlnt' -- tcqj
 opt.hidden = true
@@ -55,11 +55,11 @@ opt.shell = 'zsh'
 opt.swapfile = false
 
 opt.spelllang = 'en_us,ru_ru'
-local eng_spellfile = vim.fn.expand('$HOME/.config/nvim/spell/en.utf-8.add')
-local ru_spellfile = vim.fn.expand('$HOME/.config/nvim/spell/ru.utf-8.add')
-opt.spellfile = ("%s,%s"):format(eng_spellfile, ru_spellfile)
+local eng_spellfile = vim.fn.expand '$HOME/.config/nvim/spell/en.utf-8.add'
+local ru_spellfile = vim.fn.expand '$HOME/.config/nvim/spell/ru.utf-8.add'
+opt.spellfile = ('%s,%s'):format(eng_spellfile, ru_spellfile)
 opt.spell = true
-opt.spelloptions = "camel"
+opt.spelloptions = 'camel'
 opt.autochdir = false
 opt.cursorcolumn = false
 opt.ruler = true
@@ -79,3 +79,6 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 opt.exrc = true
+
+vim.o.exrc = true
+vim.o.secure = true
